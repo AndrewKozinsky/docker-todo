@@ -1,2 +1,2 @@
-import EntrancePages from './entrancePages'
+import EntrancePages from './EntrancePages'
 export default EntrancePages

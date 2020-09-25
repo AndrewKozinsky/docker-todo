@@ -8,10 +8,11 @@ import RegForm from "./components/regForm";
 import EnterForm from "./components/enterForm";
 import {checkToken} from '../../utils/checkToken'
 import ForgotPasswordForm from "./components/forgotPasswordForm";
-import ResetPasswordForm from "./components/resetPasswordForm";
+import ResetPasswordForm from "./components/resetPasswordForm"
+import s from './css/EntrancePages.module.scss'
 
 
-const EntrancePages = () => {
+function EntrancePages() {
     const dispatch = useDispatch()
     
     // Получу статус токена авторизации
@@ -28,7 +29,7 @@ const EntrancePages = () => {
     if(authTokenStatus === 2) return <Redirect to='/notes'/>
     
     return (
-        <>
+        <div className={s.wrapper}>
             <TopNavigation />
             <AuthSplitContainer>
                 <Switch>
@@ -46,7 +47,7 @@ const EntrancePages = () => {
                     </Route>
                 </Switch>
             </AuthSplitContainer>
-        </>
+        </div>
     )
 }
 

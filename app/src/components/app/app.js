@@ -31,9 +31,6 @@ function App() {
                     <Route path='/reset-password/:token'>
                         <EntrancePages />
                     </Route>
-                    {/*<Route path='/confirm-email/:confirmEmailToken'>
-                        <ConfirmEmailPage />
-                    </Route>*/}
                     <Route path='/(notes|user)'>
                         <UserAreaPages />
                     </Route>

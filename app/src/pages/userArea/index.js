@@ -1,2 +1,2 @@
-import UserAreaPages from './userAreaPages'
+import UserAreaPages from './UserAreaPages'
 export default UserAreaPages

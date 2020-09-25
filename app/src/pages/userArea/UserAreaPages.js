@@ -8,6 +8,7 @@ import {setAuthTokenStatus} from "../../store/actions"
 import {setUserDataToStore} from "./js/resources"
 import Spinner from "../../components/various/spinner"
 import TopNav from "./components/topNav"
+import s from './css/UserAreaPages.module.scss'
 
 function UserAreaPages() {
     const dispatch = useDispatch()
@@ -35,7 +36,7 @@ function UserAreaPages() {
     }
     
     return (
-        <>
+        <div className={s.wrapper}>
             <TopNav />
             
             <Switch>
@@ -46,7 +47,7 @@ function UserAreaPages() {
                     <UserPage />
                 </Route>
             </Switch>
-        </>
+        </div>
     )
 }
 
