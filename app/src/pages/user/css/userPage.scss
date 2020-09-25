@@ -1,0 +1,13 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 4rem;
+}
+
+.formSection {
+    margin-bottom: 3.5rem;
+}
+
+.formOuter {
+    max-width: 300px;
+}

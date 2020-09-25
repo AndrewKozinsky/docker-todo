@@ -1,0 +1,103 @@
+@import "../../../app/css/variables";
+
+
+:global .btn  {
+    display: inline-block;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    color: $text-color;
+
+    background-color: $color-1;
+    cursor: pointer;
+    transition: background-color .2s;
+
+    padding: 5px 15px;
+    border: none;
+    border-radius: $radius;
+
+    &:hover {
+        background-color: darken($color-1, 3%);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 1px $link-color;
+    }
+
+    &:disabled {
+        color: lighten($text-color, 50%);
+        background-color: white;
+        cursor: default;
+        box-shadow: 0 0 0 1px lighten($text-color, 75%);
+
+        & .btn__sign {
+            opacity: .5;
+        }
+
+        & .btn__sign, & .btnSpinnerWrapper {
+            opacity: .5;
+        }
+    }
+}
+
+:global a.btn {
+    color: $text-color;
+}
+
+:global .btn--mode-1 {
+    background-color: transparent;
+
+    &:hover {
+        background-color: transparent;
+        box-shadow: 0 0 0 1px $color-1;
+    }
+}
+
+:global .btn--mode-2 {
+    border-radius: $radius-2;
+}
+
+:global .btn__text {
+    border-bottom: 1px solid transparent;
+}
+
+:global a.btn .btn__text {
+    border-bottom-color: rgba($text-color, .2);
+    transition: border-bottom-color .2s;
+}
+
+:global a.btn:hover .btn__text {
+    border-bottom-color: rgba($text-color, .3);
+}
+
+
+:global .btn__sign {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    vertical-align: text-bottom;
+    margin-right: 4px;
+}
+:global .btn__sign--person {
+    background-image: url("../svg/person.svg");
+}
+:global .btn__sign--exit {
+    background-image: url("../svg/exit.svg");
+}
+:global .btn__sign--check-all {
+    background-image: url("../svg/check-all.svg");
+}
+:global .btn__sign--sun {
+    background-image: url("../svg/sun.svg");
+}
+:global .btn__sign--close {
+    background-image: url("../svg/close.svg");
+}
+:global .btn__sign--notes {
+    background-image: url("../svg/notes.svg");
+}
+
+:global .btn__counter {
+    display: inline-block;
+    color: rgb(180, 180, 180);
+    margin-left: 4px;
+}

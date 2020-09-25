@@ -1,0 +1,54 @@
+@import "../../../../../components/app/css/variables";
+
+
+.wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 3rem;
+
+    & > * {
+        margin-left: 5px;
+    }
+}
+
+
+// Статус сохранения заметок
+.saveStatus {
+    position: relative;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    color: lighten($text-color, 50%);
+
+    padding-left: 16px;
+    margin-right: 1.5rem;
+}
+.saveStatus:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    display: block;
+    width: 12px;
+    height: 11px;
+    transform-origin: center center;
+    background-repeat: no-repeat;
+}
+
+.notesSaved:before {
+    top: 4px;
+    background-image: url("../svg/ok.svg");
+}
+.notesAreSaving:before {
+    top: 5px;
+    background-image: url("../svg/waiting.svg");
+    animation: rotating 2s linear infinite;
+}
+
+@keyframes rotating {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}

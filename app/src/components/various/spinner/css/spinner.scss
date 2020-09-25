@@ -1,0 +1,55 @@
+@import "../../../app/css/variables";
+
+.wrapper {
+    font-size: 2.6rem;
+    line-height: 3.2rem;
+    text-align: center;
+    color: lighten($text-color, 45%);
+}
+
+
+.nest {
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+    margin: 0 0 0 -25px;
+    border: 2px solid transparent;
+    border-top-color: lighten($text-color, 50%);
+    border-radius: 50%;
+    animation: spin11 2s linear infinite;
+}
+
+.nest:before {
+    content: "";
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    bottom: 7px;
+    left: 7px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    border-top-color: $important-color;
+    animation: spin11 3s linear infinite;
+}
+
+.nest:after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    bottom: 15px;
+    left: 15px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    border-top-color: lighten($text-color, 50%);
+    animation: spin11 1.5s linear infinite;
+}
+
+@keyframes spin11 {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}

@@ -1,0 +1,17 @@
+@import "../../app/css/variables";
+
+.h2, .h3 {
+    color: $text-color;
+}
+
+.h2 {
+    font-size: 3.4rem;
+    line-height: 4.4rem;
+    margin-bottom: 2rem;
+}
+
+.h3 {
+    font-size: 2.6rem;
+    line-height: 3.2rem;
+    margin-bottom: 1.2rem;
+}

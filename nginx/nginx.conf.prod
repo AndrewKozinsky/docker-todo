@@ -1,0 +1,14 @@
+server {
+  listen 80;
+
+  server_name todo.local;
+
+  location / {
+    proxy_pass http://app:3000;
+  }
+
+  location /api/v1 {
+    proxy_pass http://api:3001;
+    rewrite ^/api/v1/(.*) /$1 break;
+  }
+}

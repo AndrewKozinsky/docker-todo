@@ -1,0 +1,29 @@
+@import "../../../../../components/app/css/variables";
+
+
+.wrapper {
+    flex-grow: 1;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.leftPart, .rightPart {
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.leftPart {
+    background-image: url("../svg/logo.svg");
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    border-right: 1px solid darken($color-1, 2%);
+}
+.rightPart {
+    padding-left: 5rem;
+
+    & > * {
+        width: 100%;
+    }
+}

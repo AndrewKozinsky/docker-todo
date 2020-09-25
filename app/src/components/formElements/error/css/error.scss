@@ -1,0 +1,21 @@
+@import "../../../app/css/variables";
+
+:global(.error) {
+    color: $important-color;
+
+    background-image: url("../svg/triangle.svg");
+    background-repeat: no-repeat;
+    background-position: 0 4px;
+
+    padding-left: 18px;
+}
+
+:global(.error--padding-1) {
+    margin-top: 5px;
+}
+:global(.error--padding-2) {
+    margin-top: 10px;
+}
+:global(.error--padding-3) {
+    margin-top: 20px;
+}

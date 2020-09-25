@@ -1,0 +1,51 @@
+@import "variables";
+
+:root {
+    font-size: 10px;
+}
+
+@font-face {
+    font-family: "SF UI Display";
+    src: url("../fonts/SFUIDisplay-Regular.woff2") format("woff2");
+    font-weight: normal;
+}
+@font-face {
+    font-family: "SF UI Display";
+    src: url("../fonts/SFUIDisplay-Bold.woff2") format("woff2");
+    font-weight: bold;
+}
+
+body {
+    font-family: 'SF UI Display', sans-serif;
+    font-size: 1.6rem;
+    line-height: 2.2rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+:global(#root) {
+    display: flex;
+    justify-content: stretch;
+
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding: 12px 50px 30px 50px;
+}
+
+a {
+    text-decoration: none;
+    border-bottom: 1px solid rgba( $link-color, .3 );
+
+    &:hover {
+        border-bottom-color: rgba( $link-color, .5 );
+    }
+
+    &:visited {
+        color: $visited-link-color;
+        border-bottom-color: rgba( $visited-link-color, .3 );
+
+        &:hover {
+            border-bottom-color: rgba( $visited-link-color, .5 );
+        }
+    }
+}

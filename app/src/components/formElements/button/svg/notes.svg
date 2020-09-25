@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Artboard</title>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M15,3 C15.5522847,3 16,3.44771525 16,4 L16,12 C16,12.5522847 15.5522847,13 15,13 L13,13 L13,12 L15,12 L15,4 L7,4 L7,6 L6,6 L6,4 C6,3.44771525 6.44771525,3 7,3 L15,3 Z" id="Path" fill="#1E1E1E" fill-rule="nonzero"></path>
+        <path d="M13,5 C13.5522847,5 14,5.44771525 14,6 L14,14 C14,14.5522847 13.5522847,15 13,15 L8,15 L4,11 L4,6 C4,5.44771525 4.44771525,5 5,5 L13,5 Z M13,6 L5,6 L5,10.585 L8.415,14 L13,14 L13,6 Z" id="Rectangle-Copy-54" fill="#1E1E1E" fill-rule="nonzero"></path>
+        <path d="M7.5,10 C8.27969612,10 8.92044868,10.5948881 8.99313342,11.35554 L9,11.5 L9,14.5 L8,14.5 L8,11.5 C8,11.2545401 7.82312484,11.0503916 7.58987563,11.0080557 L7.5,11 L4.5,11 L4.5,10 L7.5,10 Z" id="Path-37-Copy" fill="#1E1E1E" fill-rule="nonzero"></path>
+    </g>
+</svg>

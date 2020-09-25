@@ -1,0 +1,55 @@
+@import "../../../app/css/variables";
+
+
+:global(.text-input) {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    font-size: 1.6rem;
+    line-height: 2rem;
+    color: $text-color;
+    background-color: $color-1;
+
+    padding: 5px 10px;
+    border: none;
+    border-radius: $radius;
+
+    &::placeholder {
+        font-size: 1.3rem;
+    }
+
+    &:focus {
+        //background-color: $visited-link-color;
+        box-shadow: 0 0 0 1px $link-color;
+    }
+
+    &:disabled {
+        color: lighten($text-color, 50%);
+        background-color: darken( $color-1, 2% );
+    }
+
+    &::-webkit-search-cancel-button{
+        position:relative;
+        right: 0;
+        height: 13px;
+        width: 13px;
+        background-image: url("../svg/reset.svg");
+
+        -webkit-appearance: none;
+    }
+}
+
+:global(.text-input--search) {
+    padding-left: 33px;
+    border-radius: $radius-2;
+
+    background-image: url("../svg/search.svg");
+    background-repeat: no-repeat;
+    background-position: 14px center;
+}
+
+:global(.input-label) {
+    display: block;
+    margin-bottom: 4px;
+}

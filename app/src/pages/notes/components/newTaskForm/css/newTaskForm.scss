@@ -1,0 +1,52 @@
+@import "../../../../../components/app/css/variables";
+
+
+.form {
+    position: relative;
+
+    &:before, &:after {
+        content: '';
+        position: absolute;
+        background-color: lighten($text-color, 65%);
+        transition: background-color .2s;
+    }
+
+    &:before {
+        top: 27px;
+        left: -43px;
+        width: 29px;
+        height: 3px;
+    }
+    &:after {
+        top: 14px;
+        left: -30px;
+        height: 29px;
+        width: 3px;
+    }
+
+    &:hover {
+        &:before, &:after {
+            background-color: lighten($text-color, 72%);
+        }
+    }
+}
+
+.input {
+    display: block;
+    width: 100%;
+    font-size: 46px;
+    line-height: 54px;
+    border: none;
+
+    &::placeholder {
+        color: lighten($text-color, 65%);
+        transition: color .2s;
+    }
+
+    &:hover::placeholder {
+        color: lighten($text-color, 72%);
+    }
+    &:focus::placeholder {
+        color: lighten($text-color, 80%);
+    }
+}

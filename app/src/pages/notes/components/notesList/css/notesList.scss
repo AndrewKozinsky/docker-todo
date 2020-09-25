@@ -1,0 +1,121 @@
+@import "../../../../../components/app/css/variables";
+
+// Уведомление об отсутствии заметок
+.notification {
+    font-size: 2.4rem;
+    color: lighten($text-color, 60%);
+}
+
+// Обёртка заметки
+.noteWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 3rem;
+}
+
+// Текст заметки
+.noteText {
+    font-size: 34px;
+    line-height: 44px;
+    color: $text-color;
+    margin-right: 15px;
+}
+
+// Текст важной заметки
+.noteText--important {
+    color: $important-color;
+    font-weight: bolder;
+}
+
+// Обёртка кнопок управления заметки
+.noteButtons {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+// Класс с общими свойствами кнопок управления
+.noteBtn {
+    width: 39px;
+    height: 35px;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: $radius;
+    border: none;
+
+    &:focus {
+        box-shadow: 0 0 0 1px $link-color;
+    }
+}
+
+// Кнопка ставящая важность у заметки
+.noteBtnImpOff {
+    background-image: url("../svg/imp-btn.svg");
+
+    &:hover {
+        background-image: url("../svg/imp-btn-hover.svg");
+    }
+}
+
+// Кнопка убирающая важность у заметки
+.noteBtnImpOn {
+    background-image: url("../svg/imp-btn-on.svg");
+
+    &:hover {
+        background-image: url("../svg/imp-btn-on-hover.svg");
+    }
+}
+
+// Кнопка удаляющая заметку
+.trashBtn {
+    background-image: url("../svg/del-btn.svg");
+
+    &:hover {
+        background-image: url("../svg/del-btn-hover.svg");
+    }
+}
+
+// Кнопка отменяющая удаление заметки
+.countdownBtn {
+    position: relative;
+
+    &:hover .countdownBtn__grayLine {
+        border-color: lighten($text-color, 45%);
+    }
+}
+
+// Все дочерние элементы кнопки удаления
+// не должны реагировать на щелчёк мыши
+.countdownBtn > * {
+    pointer-events: none;
+
+    position: absolute;
+    border-radius: 50%;
+}
+
+.countdownBtn__grayLine {
+    top: 4px;
+    left: 6px;
+    width: 25px;
+    height: 25px;
+
+    border: 1px solid lighten($text-color, 60%);
+    transition: border-color .3s;
+}
+
+.countdownBtn__redLine {
+    top: 4px;
+    left: 6px;
+    width: 27px;
+    height: 27px;
+}
+
+.countdownBtn__closeSign {
+    top: 8px;
+    left: 10px;
+    width: 19px;
+    height: 19px;
+    background-image: url("../svg/close-sign.svg");
+    background-position: center center;
+    background-color: white;
+}

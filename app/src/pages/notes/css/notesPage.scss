@@ -1,0 +1,29 @@
+.pageWrapper {
+    padding-left: 65px;
+}
+.topPanel {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5rem;
+}
+.topPanel__left {
+
+}
+.topPanel__right {
+    flex-grow: 1;
+    max-width: 300px;
+}
+
+.newTaskWrapper {
+    margin-bottom: 3rem;
+}
+
+.notesListWrapper {
+    margin-bottom: 1rem;
+}
+
+.paginationWrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 5rem;
+}
