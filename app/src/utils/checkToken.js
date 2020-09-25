@@ -10,7 +10,6 @@ async function checkToken() {
         .then(data => data.json())
         .then(json => json)
     
-    
     return tokenInfo.status === 'success' ? 2 : 1
 }
 

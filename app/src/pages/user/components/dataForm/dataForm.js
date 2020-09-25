@@ -9,7 +9,7 @@ import {
 import s from '../../css/userPage.scss'
 
 
-const DataForm = () => {
+function DataForm() {
     const dispatch = useDispatch()
     
     // Сообщение об ошибке с сервера

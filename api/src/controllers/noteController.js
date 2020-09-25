@@ -39,7 +39,7 @@ exports.getMyNotes = catchAsync(async (req, res, next) => {
     let query = Note
         .find({ userId: req.user.id })
         .select('-__v')
-        .sort({ date: 'desc' })
+        .sort({ timeStamp: 'desc' })
     
     // Обработать подзапрос переданный в адресной строке
     query = handleGetNotesQuery(query, req.query)
@@ -49,7 +49,7 @@ exports.getMyNotes = catchAsync(async (req, res, next) => {
     
     // Получу все заметки пользователя
     const notes = await query;
-    
+
     res.status(200).json({
         status: 'success',
         results: notes.length,
@@ -65,13 +65,14 @@ exports.createMyNote = catchAsync(async (req, res, next) => {
     
     // Получу из тела запроса данные новой заметки
     const {
-        text: noteText,
+        text,
         timeStamp,
         important = false
     } = req.body
     
+    
     // Если текст не передан, то выбросить ошибку
-    if(!noteText) {
+    if(!text) {
         return next(
             new AppError('You did not provide text on the note', 400)
         )
@@ -79,7 +80,7 @@ exports.createMyNote = catchAsync(async (req, res, next) => {
     
     // Создание новой заметки
     await Note.create({
-        text: noteText,
+        text,
         important,
         timeStamp,
         userId: req.user.id
@@ -90,7 +91,7 @@ exports.createMyNote = catchAsync(async (req, res, next) => {
         status: 'success',
         data: {
             note: {
-                text: noteText,
+                text,
                 important: important,
                 timeStamp,
             }

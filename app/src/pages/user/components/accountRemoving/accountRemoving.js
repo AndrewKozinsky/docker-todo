@@ -15,7 +15,7 @@ const AccountRemoving = () => {
     const [notification, setNotification] = useState(null)
     
     return <>
-        <Button text='Delete account' onClick={() => deleteAccount(setServerErr, setNotification, dispatch)} />
+        <Button text='Delete the account' onClick={() => deleteAccount(setServerErr, setNotification, dispatch)} />
         {serverErr}
         {notification}
     </>

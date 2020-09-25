@@ -1,6 +1,5 @@
 import React from "react";
 import * as Yup from "yup";
-import axios from "axios"
 import {Form} from "formik"
 import FieldsDividerWrapper from "../../../../../components/formContainers/fieldsDividerWrapper"
 import TextInput from "../../../../../components/formElements/textInput"
@@ -80,17 +79,21 @@ function SubmitBtn({formik}) {
  */
 export async function onSubmitHandler(values, setServerErr, setNotification, dispatch) {
     
-    // По какому адресу буду делать запрос на вход пользователя
+    // По какому адресу буду делать запрос на изменение данных
     const apiUrl = '/api/v1/users/me'
     
-    let serverRes = await axios({
-        method: 'patch',
-        url: apiUrl,
-        withCredentials: true, // ?
-        data: values
-    })
-    serverRes = serverRes.data
+    // Параметры запроса
+    const options = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values)
+    }
     
+    // Сделаю запрос на сервер и полученные данные помещу в serverRes
+    const serverRes = await fetch(apiUrl, options)
+        .then(res => res.json())
+        .then(res => res)
+        .catch(err => console.log(err))
     
     /*
     Если в serverRes будет ошибка, то пользователю удалось отправить форму без написания имени, то показать соответствующее уведомление:

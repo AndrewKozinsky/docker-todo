@@ -8,7 +8,7 @@ import s from './css/userPage.scss'
 
 function UserPage() {
     
-    return <>
+    return <div>
         <Header text='Your account' />
         
         <div className={s.grid}>
@@ -35,7 +35,7 @@ function UserPage() {
                 </section>
             </div>
         </div>
-    </>
+    </div>
 }
 
 export default UserPage

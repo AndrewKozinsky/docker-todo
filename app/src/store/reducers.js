@@ -47,6 +47,11 @@ export function changeDisplayedType(state, action) {
     
     copyNotes.displayedType = action.displayedType
     
+    // Если перешли на избранные заметки, то поставить первую страницу
+    if(action.displayedType === 'important') {
+        copyNotes.currentPage = 0
+    }
+    
     copyState.notes = copyNotes
     return copyState
 }

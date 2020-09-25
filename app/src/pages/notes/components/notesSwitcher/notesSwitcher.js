@@ -44,4 +44,4 @@ function getStatistics(allNotes) {
     return [totalCount, importantCount]
 }
 
-export default NotesSwitcher;
+export default NotesSwitcher

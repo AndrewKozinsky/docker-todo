@@ -1,13 +1,11 @@
 import React from "react"
 import * as Yup from "yup"
 import {Form} from "formik"
-import axios from "axios"
 import FieldsDividerWrapper from "../../../../../components/formContainers/fieldsDividerWrapper"
 import TextInput from "../../../../../components/formElements/textInput"
 import Button from "../../../../../components/formElements/button"
 import Notification from "../../../../../components/various/notification"
 import Error from "../../../../../components/formElements/error"
-
 
 
 // Начальные значения полей формы
@@ -103,14 +101,20 @@ export async function onSubmitHandler(values, setServerErr, setNotification, dis
     // По какому адресу буду делать запрос на изменение пароля
     const apiUrl = '/api/v1/users/myPassword'
     
-    let serverRes = await axios({
-        method: 'patch',
-        withCredentials: true,
-        url: apiUrl,
-        data: values
-    })
-    serverRes = serverRes.data
-    console.log(serverRes)
+    // Параметры запроса
+    const options = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values)
+    }
+    
+    // Сделаю запрос на сервер и полученные данные помещу в serverRes
+    const serverRes = await fetch(apiUrl, options)
+        .then(res => res.json())
+        .then(res => res)
+        .catch(err => console.log(err))
+    
+    
     
     /* Если всё верно, то в serverRes будет объект с успехом:
     {

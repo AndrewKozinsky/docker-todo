@@ -17,7 +17,7 @@ const EmailForm = () => {
     
     // Уведомление
     const [notification, setNotification] = useState(null)
-    
+
     // Получу имя пользователя чтобы поставить как значение поля формы
     const {email} = useSelector(state => state.user)
     

@@ -1,7 +1,6 @@
 import React from "react"
 import * as Yup from "yup"
 import {Form} from "formik"
-import axios from "axios"
 import FieldsDividerWrapper from "../../../../../components/formContainers/fieldsDividerWrapper"
 import TextInput from "../../../../../components/formElements/textInput"
 import Button from "../../../../../components/formElements/button"
@@ -86,13 +85,19 @@ export async function onSubmitHandler(values, setServerErr, setNotification, dis
     // По какому адресу буду делать запрос на вход пользователя
     const apiUrl = '/api/v1/users/myEmail'
     
-    let serverRes = await axios({
-        method: 'put',
-        url: apiUrl,
-        withCredentials: true,
-        data: values
-    })
-    serverRes = serverRes.data
+    
+    // Параметры запроса
+    const options = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values)
+    }
+    
+    // Сделаю запрос на сервер и полученные данные помещу в serverRes
+    const serverRes = await fetch(apiUrl, options)
+        .then(res => res.json())
+        .then(res => res)
+        .catch(err => console.log(err))
     
     
     /*

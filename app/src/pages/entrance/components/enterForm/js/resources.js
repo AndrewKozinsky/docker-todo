@@ -94,14 +94,12 @@ function SubmitBtn({formik}) {
 export async function onSubmitHandler(values, setServerErr, setNotification, dispatch) {
     
     // По какому адресу буду делать запрос на вход пользователя
-    // const {serverOrigin, isDevelopment} = browserConfig
     const apiUrl = '/api/v1/users/login'
     
     // Параметры запроса
     const options = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        // credentials: "include", // Эта настройка нужно чтобы при запросе отправлялись куки
         body: JSON.stringify(values)
     }
     

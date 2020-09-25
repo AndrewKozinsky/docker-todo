@@ -1,4 +1,3 @@
-import axios from 'axios'
 import {
     changeNoteImportantStatus,
     deleteNote,
@@ -13,14 +12,17 @@ export async function getNotesFromServer() {
     
     // По какому адресу буду делать запрос
     const apiUrl = '/api/v1/myNotes'
-
-    let serverRes = await axios({
-        method: 'get',
-        withCredentials: true, // ?
-        url: apiUrl
-    })
     
-    return serverRes.data.data.notes
+    // Параметры запроса
+    const options = { method: 'GET' }
+    
+    // Сделаю запрос на сервер и полученные данные помещу в serverRes
+    const serverRes = await fetch(apiUrl, options)
+        .then(res => res.json())
+        .then(res => res)
+        .catch(err => console.log(err))
+    
+    return serverRes.data.notes
 }
 
 /**
@@ -42,15 +44,20 @@ export async function changeNoteStatusEverywhere(timeStamp, isImportant, dispatc
     // По какому адресу буду делать запрос
     const apiUrl = '/api/v1/myNotes/' + timeStamp
     
-    // Сделать запрос на изменение статуса заметки
-    await axios({
-        method: 'patch',
-        url: apiUrl,
-        withCredentials: true, // ?
-        data: {
+    // Параметры запроса
+    const options = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
             important: isImportant
-        }
-    })
+        })
+    }
+    
+    // Сделаю запрос на сервер и полученные данные помещу в serverRes
+    const serverRes = await fetch(apiUrl, options)
+        .then(res => res.json())
+        .then(res => res)
+        .catch(err => console.log(err))
     
     // Добавить сообщение о успешном сохранении данных
     dispatch(changesNotesSaveStatus(true))
@@ -68,11 +75,16 @@ export async function deleteNoteEverywhere(timeStamp, dispatch) {
     // По какому адресу буду делать запрос
     const apiUrl = '/api/v1/myNotes/' + timeStamp
     
-    await axios({
-        method: 'delete',
-        withCredentials: true,
-        url: apiUrl
-    })
+    // Параметры запроса
+    const options = {
+        method: 'DELETE'
+    }
+    
+    // Сделаю запрос на сервер и полученные данные помещу в serverRes
+    const serverRes = await fetch(apiUrl, options)
+        .then(res => res.json())
+        .then(res => res)
+        .catch(err => console.log(err))
     
     // Добавить сообщение о успешном сохранении данных
     dispatch(changesNotesSaveStatus(true))
