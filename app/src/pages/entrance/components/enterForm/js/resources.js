@@ -109,8 +109,6 @@ export async function onSubmitHandler(values, setServerErr, setNotification, dis
             .then(res => res.json())
             .then(res => res)
             .catch(err => new Error('Something went wrong'))
-    
-        console.log(serverRes)
         
         if(serverRes.status === 'success') {
             // Получить данные пользователя
@@ -135,7 +133,7 @@ export async function onSubmitHandler(values, setServerErr, setNotification, dis
     catch (err) {
         setNotification(null)
         setServerErr(
-            <Error text='Something went wrong' indent='3' />
+            <Error text='Something went wrong _' indent='3' />
         )
     }
 }

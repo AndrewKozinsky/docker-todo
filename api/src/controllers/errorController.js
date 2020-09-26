@@ -3,6 +3,7 @@ const config = require('../config')
 // Глобальный обработчик ошибок Экспресса
 module.exports = function globalErrorHandler (err, req, res, next) {
     
+    
     console.log('=======================')
     console.log(err)
     console.log('=======================')
@@ -42,10 +43,6 @@ function sendErrorDev(err, res) {
 
 // Функция отправляет ошибочный ответ в режиме публикации
 function sendErrorProd(err, res) {
-    res
-        .status(err.statusCode)
-        .json({})
-    
     
     if(err.isOperational) {
         res
@@ -54,7 +51,7 @@ function sendErrorProd(err, res) {
                 status: err.status,   // fail или error
                 error: {
                     statusCode: err.statusCode,
-                    message: err.msg, // Сообщение об ошибке
+                    message: err.message, // Сообщение об ошибке
                 }
             })
     }
