@@ -28,6 +28,7 @@ const filterObj = (obj, ...allowedFields) => {
     return newObj;
 }
 
+// Обработчик маршрута изменения почты текущего пользователя
 exports.changeMyEmail = catchAsync(async (req, res, next) => {
     // Получу новую почту
     const newEmail = req.body.email
@@ -166,6 +167,8 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
     
     res.status(204).json({
         status: 'success',
-        data: null
+        data: {
+            data: 1
+        }
     })
 })

@@ -150,38 +150,16 @@ export async function onSubmitHandler(values, setServerErr, setNotification, dis
             .catch(err => new Error('Something went wrong'))
     
         if(serverRes.status === 'success') {
-            /* Если в serverRes будет объект с успешным статусом, то показать уведомление с просьбой подтвердить почту:
-            {
-                "status": "success",
-                "data": {
-                    "user": {
-                        "name": "Andrew Kozinsky",
-                        "email": "andkozinskiy@yandex.ru",
-                    }
-                }
-            }*/
+            
             const mailService = 'https://' + values.email.split('@')[1]
+            
             setNotification(
                 <Notification>A letter with a link has been sent to your <a href={mailService}>email</a>. Click on it to log in your account.</Notification>
             )
             setServerErr(null)
         }
-        else if(serverRes.status === 'error' && serverRes.error.statusCode === 400) {
-            /* Если в serverRes будет объект с ошибкой про неверные данные от пользователя если указан не верная почта или пароль или они вообще не переданы,
-            то показать сообщение об ошибке:
-            {
-                "status": "fail",
-                "error": {
-                    "statusCode": 400,
-                    "isOperational": true,
-                    "message": "Incorrect email or password"
-                },
-                "message": "Please provide email and password.",
-            }*/
-            setServerErr( <Error text={serverRes.error.message} indent='3' /> )
-        }
         else {
-            setServerErr( <Error text='Something went wrong' indent='3' /> )
+            setServerErr( <Error text={serverRes.error.message} indent='3' /> )
         }
     }
     catch (err) {

@@ -46,12 +46,11 @@ async function addNewNoteAtServer(noteText) {
         }
 
         // Сделаю запрос на сервер и полученные данные помещу в serverRes
-        const serverRes = await fetch(apiUrl, options)
+        await fetch(apiUrl, options)
             .then(res => res.json())
             .then(res => res)
             .catch(err => new Error('Something went wrong'))
     
-        console.log(serverRes)
     }
     catch (err) {
         console.error(err)

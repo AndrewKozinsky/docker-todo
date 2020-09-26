@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken')
 const config = require('../config')
 
 /**
- *
- * @param res
+ * Функция возвращает ответ с токеном авторизации
+ * @param {Object} res — объект ответа сервера
  * @param {Number} statusCode — код ответа сервера
  * @param {Object} user —
  */
@@ -21,9 +21,9 @@ function sendResponseWithAuthToken(user, res, statusCode = 200) {
 exports.sendResponseWithAuthToken = sendResponseWithAuthToken
 
 /**
- * Функция отправляющая данные пользователя вместе с токеном доступа
+ * Функция создающая токен авторизации и ставящая его в куку в объекте ответа сервера.
  * @param user
- * @param res
+ * @param {Object} res — объект ответа сервера
  */
 function createSendToken(user, res) {
     const token = signToken(user._id)

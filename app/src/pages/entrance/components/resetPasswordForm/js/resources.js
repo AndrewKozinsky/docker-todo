@@ -125,31 +125,8 @@ export async function onSubmitHandler(values, setServerErr, token, dispatch, set
                 setGoToNotes(true)
             }, 0)
         }
-        else if(serverRes.status === 'fail') {
-            /*
-            Если в serverRes будет объект с ошибкой про испорченный токен...
-            {
-                "status": "fail",
-                "error": {
-                    "statusCode": 400,
-                    "isOperational": true,
-                    "message": "Token is invalid or has expired"
-                }
-            }*/
-            setServerErr(
-                <Error text={serverRes.error.message} indent='3' />
-            )
-        }
         else {
-            /*Или про неверные пароли...
-            {
-                "status": "error",
-                "error": {
-                    "statusCode": 400,
-                    "message": "Invalid input data: Passwords are not equal!"
-                }
-            }*/
-            setServerErr( <Error text='Something went wrong' indent='3' /> )
+            setServerErr( <Error text={serverRes.error.message} indent='3' /> )
         }
     }
     catch (err) {

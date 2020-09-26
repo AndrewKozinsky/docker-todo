@@ -102,8 +102,6 @@ export async function onSubmitHandler(values, setServerErr, setNotification, dis
             .then(res => res)
             .catch(err => new Error('Something went wrong'))
     
-        console.log(serverRes)
-    
         if(serverRes.status === 'success') {
             /* Если всё верно, то в serverRes будет объект с успехом:
             {
@@ -117,24 +115,9 @@ export async function onSubmitHandler(values, setServerErr, setNotification, dis
                 <Notification>A letter with a reset password link has been sent to your <a href={mailService}>email</a>. Click on it to reset your password.</Notification>
             )
         }
-        else if(serverRes.status === 'fail') {
+        else {
             setServerErr(
                 <Error text={serverRes.error.message} indent='3' />
-            )
-        }
-        else {
-            /* Если в serverRes будет объект с ошибкой 404 значит ввели незарегистрированную в базе данных почту.
-            Либо передали почту в неправильном формате. Показать сообщение об ошибке:
-            {
-                "status": "fail",
-                "error": {
-                    "statusCode": 404,
-                    "isOperational": true,
-                    "message": "There is no user with this email address"
-                },
-            }*/
-            setServerErr(
-                <Error text='Something went wrong' indent='3' />
             )
         }
     }

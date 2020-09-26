@@ -21,17 +21,6 @@ export async function setUserDataToStore(dispatch) {
             .catch(err => new Error('Something went wrong'))
     
         if(serverRes.status === 'success') {
-            /* Если всё верно, то в serverRes будет объект с успехом:
-            {
-                "status": "success",
-                "data": {
-                    "user": {
-                        "email": "andkozinskiy@yandex.ru",
-                        "name": "Andrew Kozinsky"
-                    }
-                }
-            }*/
-            
             // Получить данные пользователя
             const {name, email} = serverRes.data.user
         

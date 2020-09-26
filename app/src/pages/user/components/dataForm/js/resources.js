@@ -97,16 +97,6 @@ export async function onSubmitHandler(values, setServerErr, setNotification, dis
             .catch(err => new Error('Something went wrong'))
     
         if(serverRes.status === 'success') {
-            /* Если всё верно, то в serverRes будет объект с успехом:
-            {
-                "status": "success",
-                "data": {
-                    "user": {
-                        "name": "Andrew Kozinsky",
-                        "email": "andkozinskiy@yandex.ru"
-                    }
-                }
-            }*/
             
             // Получить данные пользователя
             const {name} = serverRes.data.user
@@ -117,21 +107,9 @@ export async function onSubmitHandler(values, setServerErr, setNotification, dis
             setNotification( <Notification topIndent='1'>The name has been saved.</Notification> )
             setServerErr( null )
         }
-        else if(serverRes.status === 'error' && serverRes.error.statusCode === 400) {
-            /* Если в serverRes будет ошибка, то пользователю удалось отправить форму без написания имени, то показать соответствующее уведомление:
-            {
-                "status": "error",
-                "error": {
-                    "statusCode": 400,
-                    "message": "Invalid input data: Please provide your name"
-                }
-            }*/
-            setNotification( null )
-            setServerErr( <Error text='Something went wrong' indent='3' /> )
-        }
         else {
             setNotification( null )
-            setServerErr( <Error text='Something went wrong' indent='3' /> )
+            setServerErr( <Error text={serverRes.error.message} indent='3' /> )
         }
     }
     catch (err) {

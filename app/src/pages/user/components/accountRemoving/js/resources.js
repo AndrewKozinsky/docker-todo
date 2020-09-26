@@ -18,20 +18,18 @@ export async function deleteAccount(setServerErr, setNotification, dispatch) {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
         }
-    
+        
         // Сделаю запрос на сервер и полученные данные помещу в serverRes
         const serverRes = await fetch(apiUrl, options)
-            .then(res => res.json())
+            .then(res => {
+                return (res.ok)
+                    ? { status: 'success' }
+                    : res.json()
+            })
             .then(res => res)
             .catch(err => new Error('Something went wrong'))
     
-        if(!serverRes || serverRes.status === 'success') {
-            /* В случае удачного удаления должен прийти такой объект
-            {
-                status: 'success',
-                data: null
-            }
-            Но по факту приходит null. Наверно потому что 204 статус ответа*/
+        if(serverRes.status === 'success') {
             setNotification(
                 <Notification topIndent='1'>Your account has been deleted.</Notification>
             )
@@ -42,32 +40,15 @@ export async function deleteAccount(setServerErr, setNotification, dispatch) {
                 dispatch(setAuthTokenStatus(1))
             }, 3000)
         }
-        else if(serverRes.status === 'fail' && serverRes.error.statusCode === 401) {
-            /* Если придёт ошибочный ответ, то показать ошибку.
-            {
-                "status": "fail",
-                "error": {
-                    "statusCode": 401,
-                    "isOperational": true,
-                    "message": "User recently changed password! Please log in again."
-                }
-            }*/
+        else {
             setNotification(null)
             setServerErr(
                 <Error text={serverRes.error.message} indent='3' />
             )
         }
-        else {
-            setNotification(null)
-            setServerErr(
-                <Error text='Something went wrong' indent='3' />
-            )
-        }
     }
     catch (err) {
         setNotification(null)
-        setServerErr(
-            <Error text='Something went wrong' indent='3' />
-        )
+        setServerErr( <Error text='Something went wrong' indent='3' /> )
     }
 }

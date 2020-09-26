@@ -1,5 +1,6 @@
 const config = require('../config')
 
+// Глобальный обработчик ошибок Экспресса
 module.exports = function globalErrorHandler (err, req, res, next) {
     
     console.log('=======================')
@@ -25,7 +26,7 @@ module.exports = function globalErrorHandler (err, req, res, next) {
     }
 }
 
-
+// Функция отправляет ошибочный ответ в режиме разработки
 function sendErrorDev(err, res) {
     res
         .status(err.statusCode)
@@ -39,6 +40,7 @@ function sendErrorDev(err, res) {
         })
 }
 
+// Функция отправляет ошибочный ответ в режиме публикации
 function sendErrorProd(err, res) {
     res
         .status(err.statusCode)

@@ -99,16 +99,6 @@ export async function onSubmitHandler(values, setServerErr, setNotification, dis
             .catch(err => new Error('Something went wrong'))
         
         if(serverRes.status === 'success') {
-            /* Если всё верно, то в serverRes будет объект с успехом:
-            {
-                "status": "success",
-                "data": {
-                    "user": {
-                        "name": "Андрей Козинский",
-                        "email": "andkozinskiy2@yandex.ru"
-                    }
-                }
-            }*/
             
             // Ссформирую ссылку до почтового сервиса пользователя
             const mailService = 'https://' + values.email.split('@')[1]
@@ -122,24 +112,11 @@ export async function onSubmitHandler(values, setServerErr, setNotification, dis
                 dispatch(setAuthTokenStatus(1))
             }, 4000)
         }
-        else if(serverRes.status === 'fail' && serverRes.error.statusCode === 400) {
-            /* Если в serverRes будет ошибка, то пользователю удалось отправить форму без почты
-            или он ввёл существующую почту: показать ошибку:
-            {
-                "status": "fail",
-                "error": {
-                    "statusCode": 400,
-                    "isOperational": true,
-                    "message": "Cannot change email because it didn't pass."
-                }
-            }*/
+        else {
+            setNotification( null )
             setServerErr(
                 <Error text={serverRes.error.message} indent='3' />
             )
-        }
-        else {
-            setNotification( null )
-            setServerErr('Something went wrong')
         }
     }
     catch (err) {

@@ -60,7 +60,7 @@ export async function changeNoteStatusEverywhere(timeStamp, isImportant, dispatc
         }
     
         // Сделаю запрос на сервер и полученные данные помещу в serverRes
-        const serverRes = await fetch(apiUrl, options)
+        await fetch(apiUrl, options)
             .then(res => res.json())
             .then(res => res)
             .catch(err => new Error('Something went wrong'))
@@ -90,7 +90,7 @@ export async function deleteNoteEverywhere(timeStamp, dispatch) {
         const options = { method: 'DELETE' }
     
         // Сделаю запрос на сервер и полученные данные помещу в serverRes
-        const serverRes = await fetch(apiUrl, options)
+        await fetch(apiUrl, options)
             .then(res => res.json())
             .then(res => res)
             .catch(err => new Error('Something went wrong'))
