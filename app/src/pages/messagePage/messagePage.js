@@ -1,79 +1,85 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react'
+import {useDispatch} from 'react-redux'
+import {Redirect, useParams} from "react-router-dom"
+import {setAuthTokenStatus, setUser} from '../../store/actions'
 import logo from './svg/logo.svg'
 import s from './css/messagePage.scss'
-import {Redirect, useParams} from "react-router-dom";
-import {useDispatch} from 'react-redux'
-import {setAuthTokenStatus, setUser} from '../../store/actions'
 
 
 function MessagePage() {
     
+    // Получу тип сообщения из адресной строки
+    const type = new URLSearchParams(window.location.search).get('type')
+    
+    let messageElem = null
+    
+    switch (type) {
+        case 'emailIsNotConfirmed':
+            messageElem = <EmailIsNotConfirmed />
+            break
+        case 'emailIsConfirmed':
+            messageElem = <EmailIsConfirmed />
+            break
+    }
+    
+    return (
+        <div className={s.pageWrapper}>
+            <img src={logo} className={s.logo} alt='Todo service logotype' />
+            {messageElem}
+        </div>
+    )
+}
+
+function EmailIsNotConfirmed() {
+    return <p className={s.text}>Your email has not been confirmed. Maybe you have already confirmed your email or you got the wrong address.</p>
+}
+
+function EmailIsConfirmed() {
     const dispatch = useDispatch()
     
     // В переменной хранится булево значение нужно ли делать переадресацию на другую страницу
     const [redirectToNewPage, setRedirectToNewPage] = useState(false)
     
-    // Через 5 секунд после открытия страницы поставить в redirectToNewPage true чтобы он перебросил на другую страницу
+    // Через 5 секунд после открытия страницы перебросить на другую страницу
     useEffect(function () {
+        // Поставить данные пользователя в Хранилище
+        setUserDataToStore(dispatch)
+        
         setTimeout(function () {
             setRedirectToNewPage(true)
         }, 5000)
     }, [])
     
-    // Получу тип сообщения из адресной строки
-    const type = new URLSearchParams(window.location.search).get('type')
+    // Если в true, то перебросить пользователя на другую страницу
+    if(redirectToNewPage) return <Redirect to='notes' />
     
-    
-    // Получу текст сообщения и адрес страницы на которую будет переадресация через 5 секунд
-    let [messageText, newPageUrl] = getPageData(type)
-    
-    // Если тип равен emailIsConfirmed, то выполню дополнительные действия
-    if(type === 'emailIsConfirmed') setUserDataToStore(dispatch)
-    
-    if(redirectToNewPage) return <Redirect to={newPageUrl} />
-    
-    if(!messageText) return <Redirect to='/enter' />
-    
-    return (
-        <div className={s.pageWrapper}>
-            <img src={logo} className={s.logo} alt='Todo service logotype' />
-            <p className={s.text}>{messageText}</p>
-        </div>
-    )
+    return <p className={s.text}>Your email has been confirmed! You will be redirected to Notes page in 5 seconds...</p>
 }
 
-function getPageData(type) {
-    let messageText, newPageUrl
-    
-    switch (type) {
-        case 'emailIsNotConfirmed':
-            messageText = 'Your email has not been confirmed. Maybe you have already confirmed your email or you got the wrong address. You will be redirected to Main page in 5 seconds...'
-            newPageUrl = '/'
-            break;
-        case 'emailIsConfirmed':
-            messageText = 'Your email has been confirmed! You will be redirected to Notes page in 5 seconds...'
-            newPageUrl = '/notes'
-            break;
-    }
-    
-    return [messageText, newPageUrl]
-}
-
-
+// Фукнция делает запрос на проверку токена чтобы получить данные о пользователе.
 async function setUserDataToStore(dispatch) {
     
     // Параметры запроса
-    const options = { method: 'POST' }
+    const options = {
+        method: 'POST'
+    }
     const apiUrl = '/api/v1/users/getTokenInfo'
     
-    const tokenInfo = await fetch(apiUrl, options)
-        .then(data => data.json())
-        .then(json => json)
+    try {
+        const tokenInfo = await fetch(apiUrl, options)
+            .then(data => data.json())
+            .then(json => json)
     
-    if(tokenInfo.status === 'error') return
-    
-    dispatch(setUser(tokenInfo.data.name, tokenInfo.data.email))
-    dispatch(setAuthTokenStatus(2))
+        if(tokenInfo.status === 'success') {
+            // Поставить данные о пользователе в Хранилище
+            dispatch(setUser(tokenInfo.data.name, tokenInfo.data.email))
+            // Поставить в Хранилище что токен авторизации хранится в браузере
+            dispatch(setAuthTokenStatus(2))
+        }
+    }
+    catch (err) {
+        console.log(`Could't get information about authorization token.`)
+    }
 }
 
 export default MessagePage

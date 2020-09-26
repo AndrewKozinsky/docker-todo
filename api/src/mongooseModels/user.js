@@ -44,7 +44,7 @@ userSchema.pre('save', async function(next) {
     if(!this.isModified('password')) return next()
     
     // Зашифровать пароль
-    this.password = await bcrypt.hash(this.password, 12);
+    this.password = await bcrypt.hash(this.password, 12)
     
     // Удалить поле с подтверждением пароля
     this.passwordConfirm = undefined
@@ -55,8 +55,8 @@ userSchema.pre('save', function (next) {
     if(!this.isModified('password') || this.isNew)
         return next();
     
-    this.passwordChangedAt = +Date.now() - 1000;
-    next();
+    this.passwordChangedAt = +Date.now() - 1000
+    next()
 })
 
 
@@ -83,7 +83,7 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
 
 // Метод создающий токен сброса пароля
 userSchema.methods.createPasswordResetToken = function () {
-    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetToken = crypto.randomBytes(32).toString('hex')
     
     this.passwordResetToken = crypto
         .createHash('sha256')
@@ -96,6 +96,6 @@ userSchema.methods.createPasswordResetToken = function () {
 }
 
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema)
 
-module.exports = User;
+module.exports = User

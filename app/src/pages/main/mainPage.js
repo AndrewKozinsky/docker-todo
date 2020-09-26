@@ -1,8 +1,8 @@
 import React from 'react'
+import {useDispatch, useSelector} from "react-redux"
 import {Redirect} from 'react-router-dom'
-import {useDispatch, useSelector} from "react-redux";
 import {checkToken} from '../../utils/checkToken'
-import {setAuthTokenStatus} from "../../store/actions";
+import {setAuthTokenStatus} from "../../store/actions"
 
 
 function MainPage() {
@@ -11,14 +11,13 @@ function MainPage() {
     // Получу статус токена
     const {authTokenStatus} = useSelector(store => store.user)
     
-    // Если authTokenStatus равен нулю, то не понятно есть ли в браузере токен и верен ли он.
-    // Поэтому проверю.
+    // Если authTokenStatus равен нулю, то не понятно есть ли в браузере токен и верен ли он. Поэтому проверю.
     if(authTokenStatus === 0) {
         checkToken().then((status) => {
             dispatch( setAuthTokenStatus(status) )
         })
         
-        return null //'IndexPage'
+        return null
     }
     
     // Если токена нет или он неверный, то пользователь еще не вошёл, перенаправить на страницу входа

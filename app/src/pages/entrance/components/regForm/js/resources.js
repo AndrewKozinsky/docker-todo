@@ -1,11 +1,11 @@
-import React from "react";
-import * as Yup from "yup";
-import {Form} from "formik";
-import FieldsDividerWrapper from "../../../../../components/formContainers/fieldsDividerWrapper";
-import TextInput from "../../../../../components/formElements/textInput";
-import Button from "../../../../../components/formElements/button";
-import Notification from "../../../../../components/various/notification";
-import Error from "../../../../../components/formElements/error";
+import React from "react"
+import * as Yup from "yup"
+import {Form} from "formik"
+import FieldsDividerWrapper from "../../../../../components/formContainers/fieldsDividerWrapper"
+import TextInput from "../../../../../components/formElements/textInput"
+import Button from "../../../../../components/formElements/button"
+import Notification from "../../../../../components/various/notification"
+import Error from "../../../../../components/formElements/error"
 
 
 // Начальные значения полей формы
@@ -142,44 +142,49 @@ export async function onSubmitHandler(values, setServerErr, setNotification, dis
         })
     }
     
-    // Сделаю запрос на сервер и полученные данные помещу в serverRes
-    const serverRes = await fetch(apiUrl, options)
-        .then(res => res.json())
-        .then(res => res)
-        .catch(err => console.log(err))
+    try {
+        // Сделаю запрос на сервер и полученные данные помещу в serverRes
+        const serverRes = await fetch(apiUrl, options)
+            .then(res => res.json())
+            .then(res => res)
+            .catch(err => new Error('Something went wrong'))
     
-    /* Если в serverRes будет объект с ошибкой про неверные данные от пользователя если указан не верная почта или пароль или они вообще не переданы,
-    то показать сообщение об ошибке:
-    {
-        "status": "fail",
-        "error": {
-            "statusCode": 400,
-            "isOperational": true,
-            "message": "Incorrect email or password"
-        },
-        "message": "Please provide email and password.",
-    }*/
-    if(serverRes.status === 'error' && serverRes.error.statusCode === 400) {
-        setServerErr(
-            <Error text={serverRes.error.message} indent='3' />
-        )
-    }
-    
-    /* Если в serverRes будет объект с успешным статусом, то показать уведомление с просьбой подтвердить почту:
-    {
-        "status": "success",
-        "data": {
-            "user": {
-                "name": "Andrew Kozinsky",
-                "email": "andkozinskiy@yandex.ru",
-            }
+        if(serverRes.status === 'success') {
+            /* Если в serverRes будет объект с успешным статусом, то показать уведомление с просьбой подтвердить почту:
+            {
+                "status": "success",
+                "data": {
+                    "user": {
+                        "name": "Andrew Kozinsky",
+                        "email": "andkozinskiy@yandex.ru",
+                    }
+                }
+            }*/
+            const mailService = 'https://' + values.email.split('@')[1]
+            setNotification(
+                <Notification>A letter with a link has been sent to your <a href={mailService}>email</a>. Click on it to log in your account.</Notification>
+            )
+            setServerErr(null)
         }
-    }*/
-    if(serverRes.status === 'success') {
-        const mailService = 'https://' + values.email.split('@')[1]
-        setNotification(
-            <Notification>A letter with a link has been sent to your <a href={mailService}>email</a>. Click on it to log in your account.</Notification>
-        )
+        else if(serverRes.status === 'error' && serverRes.error.statusCode === 400) {
+            /* Если в serverRes будет объект с ошибкой про неверные данные от пользователя если указан не верная почта или пароль или они вообще не переданы,
+            то показать сообщение об ошибке:
+            {
+                "status": "fail",
+                "error": {
+                    "statusCode": 400,
+                    "isOperational": true,
+                    "message": "Incorrect email or password"
+                },
+                "message": "Please provide email and password.",
+            }*/
+            setServerErr( <Error text={serverRes.error.message} indent='3' /> )
+        }
+        else {
+            setServerErr( <Error text='Something went wrong' indent='3' /> )
+        }
     }
-    
+    catch (err) {
+        setServerErr( <Error text='Something went wrong' indent='3' /> )
+    }
 }

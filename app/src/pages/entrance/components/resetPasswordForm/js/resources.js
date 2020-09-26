@@ -95,59 +95,64 @@ function SubmitBtn({formik}) {
  */
 export async function onSubmitHandler(values, setServerErr, token, dispatch, setGoToNotes) {
     
-    // По какому адресу буду делать запрос на вход пользователя
-    const apiUrl = '/api/v1/users/resetPassword/' + token
+    try {
+        // По какому адресу буду делать запрос на вход пользователя
+        const apiUrl = '/api/v1/users/resetPassword/' + token
     
-    // Параметры запроса
-    const options = {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values)
-    }
-    
-    // Сделаю запрос на сервер и полученные данные помещу в serverRes
-    const serverRes = await fetch(apiUrl, options)
-        .then(res => res.json())
-        .then(res => res)
-        .catch(err => console.log(err))
-    
-    /*
-    Если в serverRes будет объект с ошибкой про испорченный токен...
-    {
-        "status": "fail",
-        "error": {
-            "statusCode": 400,
-            "isOperational": true,
-            "message": "Token is invalid or has expired"
+        // Параметры запроса
+        const options = {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(values)
         }
-    }
-    Или про неверные пароли...
-    {
-        "status": "error",
-        "error": {
-            "statusCode": 400,
-            "message": "Invalid input data: Passwords are not equal!"
-        }
-    }
-    то показать сообщение об ошибке:
-    */
-    if(serverRes.status === 'fail') {
-        setServerErr(
-            <Error text={serverRes.error.message} indent='3' />
-        )
-    }
     
-    if(serverRes.status === 'success') {
-    
-        // Получить данные пользователя
-        const {name, email} = serverRes.data.user
+        // Сделаю запрос на сервер и полученные данные помещу в serverRes
+        const serverRes = await fetch(apiUrl, options)
+            .then(res => res.json())
+            .then(res => res)
+            .catch(err => new Error('Something went wrong'))
         
-        // Поставить их в Хранилище
-        dispatch(setUser(name, email))
+        if(serverRes.status === 'success') {
     
-        // Перейти на страницу заметок
-        setTimeout(function () {
-            setGoToNotes(true)
-        }, 0)
+            // Получить данные пользователя
+            const {name, email} = serverRes.data.user
+            
+            // Поставить их в Хранилище
+            dispatch(setUser(name, email))
+        
+            // Перейти на страницу заметок
+            setTimeout(function () {
+                setGoToNotes(true)
+            }, 0)
+        }
+        else if(serverRes.status === 'fail') {
+            /*
+            Если в serverRes будет объект с ошибкой про испорченный токен...
+            {
+                "status": "fail",
+                "error": {
+                    "statusCode": 400,
+                    "isOperational": true,
+                    "message": "Token is invalid or has expired"
+                }
+            }*/
+            setServerErr(
+                <Error text={serverRes.error.message} indent='3' />
+            )
+        }
+        else {
+            /*Или про неверные пароли...
+            {
+                "status": "error",
+                "error": {
+                    "statusCode": 400,
+                    "message": "Invalid input data: Passwords are not equal!"
+                }
+            }*/
+            setServerErr( <Error text='Something went wrong' indent='3' /> )
+        }
+    }
+    catch (err) {
+        setServerErr( <Error text='Something went wrong' indent='3' /> )
     }
 }

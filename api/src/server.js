@@ -2,11 +2,11 @@ const config = require('./config')
 const {connectDb} = require('./utils/db')
 
 // Выключение сервера при ошибке типа uncaughtException
-/*process.on('uncaughtException', err => {
+process.on('uncaughtException', err => {
     console.log('UNCAUGHT EXCEPTION 💥. Shutting down...');
     console.log(err.name, err.message);
     process.exit(1)
-})*/
+})
 
 connectDb()
     .on('error', console.log)

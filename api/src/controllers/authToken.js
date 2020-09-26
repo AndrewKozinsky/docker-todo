@@ -26,7 +26,6 @@ exports.sendResponseWithAuthToken = sendResponseWithAuthToken
  * @param res
  */
 function createSendToken(user, res) {
-    
     const token = signToken(user._id)
     
     const cookieOptions = {

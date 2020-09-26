@@ -1,4 +1,4 @@
-import {createStore} from "redux";
+import {createStore} from "redux"
 import {
     setUser,
     setAuthTokenStatus,
@@ -25,7 +25,7 @@ const inicialState = {
     notes: {
         areNotesSaved: true, // Идёт ли сейчас сохранение заметок
         currentPage: 0, // Текущая показываемая страница в заметках
-        notesPerPage: 3, // Сколько заметок показывается на одной странице
+        notesPerPage: 5, // Сколько заметок показывается на одной странице
         searchStr: '', // Какой текст ищут
         displayedType: 'all', // Какой тип заметок показывается: all (все) или important (важные)
         // Все заметки

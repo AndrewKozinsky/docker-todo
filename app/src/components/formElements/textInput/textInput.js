@@ -1,9 +1,9 @@
 import React from 'react'
-import { useField } from 'formik';
-import Error from "../error";
+import { useField } from 'formik'
+import Error from "../error"
 import './css/textInput.scss'
 
-
+// Компонент текстового поля
 function TextInput({ label, ...props }) {
     
     const [field, meta] = useField(props)

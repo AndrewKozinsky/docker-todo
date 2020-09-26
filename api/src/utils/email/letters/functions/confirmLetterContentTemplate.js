@@ -1,5 +1,4 @@
 function confirmLetterContentTemplate(confirmUrl) {
-    
     return `
         <p class="paragraph">
             Your email address was provided when you registered in the <i>To Do List</i> service. Please confirm your mail address by clicking on this button:

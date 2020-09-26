@@ -1,8 +1,7 @@
 import React from 'react'
-import Button from "../../../../components/formElements/button";
+import { useRouteMatch } from "react-router-dom"
+import Button from "../../../../components/formElements/button"
 import s from './css/topNavigation.scss'
-
-import { useRouteMatch } from "react-router-dom";
 
 
 function TopNavEntrance() {

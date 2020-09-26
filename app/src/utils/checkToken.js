@@ -6,11 +6,16 @@ async function checkToken() {
     const options = { method: 'POST' }
     const apiUrl = '/api/v1/users/getTokenInfo'
     
-    const tokenInfo = await fetch(apiUrl, options)
-        .then(data => data.json())
-        .then(json => json)
+    try {
+        const tokenInfo = await fetch(apiUrl, options)
+            .then(data => data.json())
+            .then(json => json)
     
-    return tokenInfo.status === 'success' ? 2 : 1
+        return tokenInfo.status === 'success' ? 2 : 1
+    }
+    catch (e) {
+        return 1
+    }
 }
 
 export {

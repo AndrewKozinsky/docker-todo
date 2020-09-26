@@ -98,70 +98,76 @@ function SubmitBtn({formik}) {
  * @param {Function} dispatch — диспатчер экшен-функции.
  */
 export async function onSubmitHandler(values, setServerErr, setNotification, dispatch) {
-    // По какому адресу буду делать запрос на изменение пароля
-    const apiUrl = '/api/v1/users/myPassword'
+    try {
+        // По какому адресу буду делать запрос на изменение пароля
+        const apiUrl = '/api/v1/users/myPassword'
     
-    // Параметры запроса
-    const options = {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values)
-    }
-    
-    // Сделаю запрос на сервер и полученные данные помещу в serverRes
-    const serverRes = await fetch(apiUrl, options)
-        .then(res => res.json())
-        .then(res => res)
-        .catch(err => console.log(err))
-    
-    
-    
-    /* Если всё верно, то в serverRes будет объект с успехом:
-    {
-        "status": "success",
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMDk3MTc4MTE3YzhmNDVmNzRiMjc3OSIsImlhdCI6MTU5NDY0MjE0NiwiZXhwIjoxNjAyNDE4MTQ2fQ.vLPLRc4cXT9L2SjEHGFrAYV4fqzYanQFFrgP701aL1M",
-        "data": {
-            "user": {
-                "name": "Andrew Kozinsky",
-                "email": "andkozinskiy@yandex.ru"
-            }
+        // Параметры запроса
+        const options = {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(values)
         }
-    }*/
-    if(serverRes.status === 'success') {
+    
+        // Сделаю запрос на сервер и полученные данные помещу в serverRes
+        const serverRes = await fetch(apiUrl, options)
+            .then(res => res.json())
+            .then(res => res)
+            .catch(err => new Error('Something went wrong'))
+    
+        if(serverRes.status === 'success') {
+            /* Если всё верно, то в serverRes будет объект с успехом:
+            {
+                "status": "success",
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMDk3MTc4MTE3YzhmNDVmNzRiMjc3OSIsImlhdCI6MTU5NDY0MjE0NiwiZXhwIjoxNjAyNDE4MTQ2fQ.vLPLRc4cXT9L2SjEHGFrAYV4fqzYanQFFrgP701aL1M",
+                "data": {
+                    "user": {
+                        "name": "Andrew Kozinsky",
+                        "email": "andkozinskiy@yandex.ru"
+                    }
+                }
+            }*/
         
-        // Уведомить пользователя об успешном изменении пароля
-        setNotification(
-            <Notification topIndent='1'>The password has been changed.</Notification>
-        )
+            // Уведомить пользователя об успешном изменении пароля
+            setNotification(
+                <Notification topIndent='1'>The password has been changed.</Notification>
+            )
+        }
+        else if(serverRes.status === 'fail' && serverRes.status === 401) {
+            /* Если в serverRes будет ошибка, то показать ошибку:
+            {
+                "status": "fail",
+                "error": {
+                    "statusCode": 401,
+                    "isOperational": true,
+                    "message": "User recently changed password! Please log in again."
+                }
+            }*/
+            /*{
+                "status": "fail",
+                "error": {
+                    "statusCode": 401,
+                    "isOperational": true,
+                    "message": "Your current password is wrong"
+                }
+            }*/
+            setServerErr( <Error text={serverRes.error.message} indent='3' /> )
+        }
+        else if(serverRes.status === 'error' && serverRes.status === 400) {
+            /*{
+                "status": "error",
+                "error": {
+                    "statusCode": 400,
+                    "message": "Invalid input data: Please provide a password. A password must have at least 4 characters.. Passwords are not equal!"
+                }
+            }*/
+            setServerErr( <Error text={serverRes.error.message} indent='3' /> )
+        }
+        else {
+            setServerErr( <Error text='Something went wrong' indent='3' /> )
+        }
     }
-    else {
-        /*
-        Если в serverRes будет ошибка, то показать ошибку:
-        {
-            "status": "fail",
-            "error": {
-                "statusCode": 401,
-                "isOperational": true,
-                "message": "User recently changed password! Please log in again."
-            }
-        }*/
-        /*{
-            "status": "fail",
-            "error": {
-                "statusCode": 401,
-                "isOperational": true,
-                "message": "Your current password is wrong"
-            }
-        }*/
-        /*{
-            "status": "error",
-            "error": {
-                "statusCode": 400,
-                "message": "Invalid input data: Please provide a password. A password must have at least 4 characters.. Passwords are not equal!"
-            }
-        }*/
-        setServerErr(
-            <Error text={serverRes.error.message} indent='3' />
-        )
+    catch (err) {
+        setServerErr( <Error text='Something went wrong' indent='3' /> )
     }
 }

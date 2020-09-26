@@ -1,7 +1,7 @@
 import React from 'react'
 import {useDispatch, useSelector} from "react-redux"
-import RadioButtonsGroup from "../../../../components/formElements/radioButtonsGroup"
 import {changeDisplayedType} from "../../../../store/actions"
+import RadioButtonsGroup from "../../../../components/formElements/radioButtonsGroup"
 
 
 function NotesSwitcher() {

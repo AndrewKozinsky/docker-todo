@@ -1,5 +1,6 @@
-const path = require('path')
 const express = require('express')
+const path = require('path')
+const cookieParser = require('cookie-parser')
 const rateLimit = require('express-rate-limit')
 // const helmet = require('helmet')
 // const mongoSanitize = require('express-mongo-sanitize')
@@ -7,7 +8,6 @@ const userRouter = require('./routes/userRouter')
 const myNotesRouter = require('./routes/myNotesRouter')
 const AppError = require('./utils/appError')
 const globalErrorHandler = require('./controllers/errorController')
-const cookieParser = require('cookie-parser')
 
 
 const app = express()
@@ -56,4 +56,4 @@ app.all("*", (req, res, next) => {
 app.use(globalErrorHandler)
 
 
-module.exports = app;
+module.exports = app

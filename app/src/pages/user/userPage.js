@@ -1,8 +1,8 @@
 import React from 'react'
 import Header from "../../components/header"
-import DataForm from "./components/dataForm";
+import DataForm from "./components/dataForm"
 import EmailForm from "./components/emailForm";
-import PasswordChangingForm from "./components/passwordChangingForm";
+import PasswordChangingForm from "./components/passwordChangingForm"
 import AccountRemoving from "./components/accountRemoving"
 import s from './css/userPage.scss'
 

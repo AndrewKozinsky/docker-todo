@@ -1,6 +1,6 @@
-import React from 'react';
-import {Form} from "formik";
-import TextInput from "../../../../../components/formElements/textInput";
+import React from 'react'
+import {Form} from "formik"
+import TextInput from "../../../../../components/formElements/textInput"
 
 
 /**

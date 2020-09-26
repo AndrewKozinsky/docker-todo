@@ -1,7 +1,7 @@
-import React from "react";
+import React from "react"
 import s from './css/notification.scss'
 
-
+// Компонент уведомления
 function Notification(props) {
     const {
         children,

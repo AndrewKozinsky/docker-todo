@@ -1,15 +1,15 @@
 import React, {useState} from 'react'
-import { Formik } from 'formik';
-import { Link } from 'react-router-dom';
-import s from './css/form.scss'
-import Header from '../../../../components/header';
-import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux"
+import { Formik } from 'formik'
+import { Link } from 'react-router-dom'
+import Header from '../../../../components/header'
 import {
     initialValues,
     validationSchema,
     createForm,
     onSubmitHandler
 } from "./js/resources"
+import s from './css/form.scss'
 
 
 // Форма регистрации нового пользователя

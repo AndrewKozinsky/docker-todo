@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 import './css/button.scss'
 import './css/spinner.scss'
 
@@ -51,7 +51,6 @@ function Button(props) {
         <span className='btn__text' key='f'>{text}</span>,
         counterEl
     ]
-    
     
     return  props.tag === 'a'
         ? <Link {...attrs}>{innerContent}</Link>

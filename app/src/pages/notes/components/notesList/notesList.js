@@ -1,12 +1,12 @@
 import React, {useEffect, useState, useRef} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import {addAllNotes, addDisplayedNotes} from '../../../../store/actions'
 import {
     getNotesFromServer,
     changeNoteStatusEverywhere,
     deleteNoteEverywhere,
     animate
 } from './js/resources'
-import {addAllNotes, addDisplayedNotes} from '../../../../store/actions'
 import s from './css/notesList.scss'
 
 /**

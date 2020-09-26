@@ -5,9 +5,7 @@ import {setSearchStr} from "../../../../store/actions"
 import {createForm} from "./js/resources"
 
 
-
 function NotesSearch() {
-    
     const dispatch = useDispatch()
     
     const getValues = (e) => {

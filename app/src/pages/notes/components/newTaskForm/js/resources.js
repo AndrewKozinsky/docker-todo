@@ -21,10 +21,6 @@ export function formSubmit(e, inputRef, dispatch) {
     // Добавить сообщение о процессе сохранения данных
     dispatch(changesNotesSaveStatus(false))
     
-    // TODO предусмотри случай когда отключен интернет
-    // Проверяется так: navigator.onLine
-    // Может в этом случае заметку сохранять в LocalStorage?
-    
     // Добавить новую заметку на сервере
     addNewNoteAtServer(inputVal).then(() => {
         // Добавить сообщение о процессе сохранения данных
@@ -34,22 +30,30 @@ export function formSubmit(e, inputRef, dispatch) {
 
 
 async function addNewNoteAtServer(noteText) {
-    // По какому адресу буду делать запрос
-    const apiUrl = '/api/v1/myNotes'
     
-    // Параметры запроса
-    const options = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            text: noteText,
-            timeStamp: Date.now()
-        })
+    try {
+        // По какому адресу буду делать запрос
+        const apiUrl = '/api/v1/myNotes'
+    
+        // Параметры запроса
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                text: noteText,
+                timeStamp: Date.now()
+            })
+        }
+
+        // Сделаю запрос на сервер и полученные данные помещу в serverRes
+        const serverRes = await fetch(apiUrl, options)
+            .then(res => res.json())
+            .then(res => res)
+            .catch(err => new Error('Something went wrong'))
+    
+        console.log(serverRes)
     }
-    
-    // Сделаю запрос на сервер и полученные данные помещу в serverRes
-    const serverRes = await fetch(apiUrl, options)
-        .then(res => res.json())
-        .then(res => res)
-        .catch(err => console.log(err))
+    catch (err) {
+        console.error(err)
+    }
 }

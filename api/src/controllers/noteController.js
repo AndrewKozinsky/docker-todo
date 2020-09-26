@@ -85,7 +85,6 @@ exports.createMyNote = catchAsync(async (req, res, next) => {
         timeStamp,
         userId: req.user.id
     })
-
     
     res.status(200).json({
         status: 'success',
@@ -136,7 +135,6 @@ exports.deleteMyNote = catchAsync(async (req, res, next) => {
 
 
 // Получение статистики по количеству заметок
-/*
 exports.getMyNotesStatistics = catchAsync(async (req, res, next) => {
     
     const totalCount = await Note.aggregate([
@@ -171,4 +169,4 @@ exports.getMyNotesStatistics = catchAsync(async (req, res, next) => {
             stats
         }
     })
-})*/
+})

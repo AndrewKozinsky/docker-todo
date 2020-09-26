@@ -1,12 +1,11 @@
-import React from "react";
-import * as Yup from "yup";
-// import browserConfig from '../../../../../browserConfig'
-import {Form} from "formik";
-import FieldsDividerWrapper from "../../../../../components/formContainers/fieldsDividerWrapper";
-import TextInput from "../../../../../components/formElements/textInput";
-import Button from "../../../../../components/formElements/button";
-import Notification from "../../../../../components/various/notification";
-import Error from "../../../../../components/formElements/error";
+import React from "react"
+import * as Yup from "yup"
+import {Form} from "formik"
+import FieldsDividerWrapper from "../../../../../components/formContainers/fieldsDividerWrapper"
+import TextInput from "../../../../../components/formElements/textInput"
+import Button from "../../../../../components/formElements/button"
+import Notification from "../../../../../components/various/notification"
+import Error from "../../../../../components/formElements/error"
 
 
 // Начальные значения полей формы
@@ -86,51 +85,62 @@ function SubmitBtn({formik}) {
  */
 export async function onSubmitHandler(values, setServerErr, setNotification, dispatch) {
     
-    // По какому адресу буду делать запрос на вход пользователя
-    const apiUrl = '/api/v1/users/forgotPassword'
+    try {
+        // По какому адресу буду делать запрос на вход пользователя
+        const apiUrl = '/api/v1/users/forgotPassword'
     
-    // Параметры запроса
-    const options = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
-        credentials: "include"
-    }
-    
-    // Сделаю запрос на сервер и полученные данные помещу в serverRes
-    const serverRes = await fetch(apiUrl, options)
-        .then(res => res.json())
-        .then(res => res)
-        .catch(err => console.log(err))
-    
-    
-    /* Если в serverRes будет объект с ошибкой 404 значит ввели незарегистрированную в базе данных почту.
-    Либо передали почту в неправильном формате. Показать сообщение об ошибке:
-    {
-        "status": "fail",
-        "error": {
-            "statusCode": 404,
-            "isOperational": true,
-            "message": "There is no user with this email address"
-        },
-    }*/
-    if(serverRes.status === 'fail' && serverRes.error.statusCode === 404) {
-        setServerErr(
-            <Error text={serverRes.error.message} indent='3' />
-        )
-    }
-    
-    /* Если всё верно, то в serverRes будет объект с успехом:
-    {
-        "status": "success",
-        "data": {
-            "message": "Email has been sent!"
+        // Параметры запроса
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(values)
         }
-    }*/
-    if(serverRes.status === 'success') {
-        const mailService = 'https://' + values.email.split('@')[1]
-        setNotification(
-            <Notification>A letter with a reset password link has been sent to your <a href={mailService}>email</a>. Click on it to reset your password.</Notification>
+    
+        // Сделаю запрос на сервер и полученные данные помещу в serverRes
+        const serverRes = await fetch(apiUrl, options)
+            .then(res => res.json())
+            .then(res => res)
+            .catch(err => new Error('Something went wrong'))
+    
+        console.log(serverRes)
+    
+        if(serverRes.status === 'success') {
+            /* Если всё верно, то в serverRes будет объект с успехом:
+            {
+                "status": "success",
+                "data": {
+                    "message": "Email has been sent!"
+                }
+            }*/
+            const mailService = 'https://' + values.email.split('@')[1]
+            setNotification(
+                <Notification>A letter with a reset password link has been sent to your <a href={mailService}>email</a>. Click on it to reset your password.</Notification>
+            )
+        }
+        else if(serverRes.status === 'fail') {
+            setServerErr(
+                <Error text={serverRes.error.message} indent='3' />
+            )
+        }
+        else {
+            /* Если в serverRes будет объект с ошибкой 404 значит ввели незарегистрированную в базе данных почту.
+            Либо передали почту в неправильном формате. Показать сообщение об ошибке:
+            {
+                "status": "fail",
+                "error": {
+                    "statusCode": 404,
+                    "isOperational": true,
+                    "message": "There is no user with this email address"
+                },
+            }*/
+            setServerErr(
+                <Error text='Something went wrong' indent='3' />
+            )
+        }
+    }
+    catch (err) {
+        setServerErr(
+            <Error text='Something went wrong' indent='3' />
         )
     }
 }

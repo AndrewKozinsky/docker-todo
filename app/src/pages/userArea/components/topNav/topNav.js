@@ -1,9 +1,10 @@
 import React from 'react'
 import {useDispatch, useSelector} from "react-redux"
 import {useRouteMatch} from "react-router-dom"
-import Button from "../../../../components/formElements/button"
 import {setAuthTokenStatus} from "../../../../store/actions"
+import Button from "../../../../components/formElements/button"
 import s from './css/topNavigation.scss'
+
 
 // Компонент верхней навигации
 function TopNav() {
@@ -63,14 +64,19 @@ function TopNavLink({ tag, to, label, sign, onClick, i }) {
 // Обработчик щелчка по кнопке выхода пользователя из учётной записи
 function logOut(dispatch) {
     
-    // Нужно удалить куку с токеном авторизации. Для этого сделаю запрос на API к адресу
-    const apiUrl = '/api/v1/users/logout'
+    try {
+        // Нужно удалить куку с токеном авторизации. Для этого сделаю запрос на API к адресу
+        const apiUrl = '/api/v1/users/logout'
     
-    // Сделаю запрос на сервер и полученные данные помещу в serverRes
-    const serverRes = fetch(apiUrl, { method: 'GET' })
-        .catch(err => console.log(err))
+        // Сделаю запрос на сервер и полученные данные помещу в serverRes
+        const serverRes = fetch(apiUrl, { method: 'GET' })
+            .catch(err => new Error('Something went wrong'))
     
-    dispatch(setAuthTokenStatus(1))
+        dispatch(setAuthTokenStatus(1))
+    }
+    catch (err) {
+        console.error(new Error('Something went wrong'))
+    }
 }
 
 

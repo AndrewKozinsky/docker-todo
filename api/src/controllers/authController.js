@@ -21,15 +21,8 @@ exports.getTokenInfo = async (req, res, next) => {
         token = req.cookies.authToken
     }
     
-    // Функция возвращающая ошибочный ответ
-    function sendErrorResponse() {
-        res.status(200).json({
-            status: 'error'
-        })
-    }
-    
     // Если токен не передан, то возвратить ошибочный ответ
-    if(!token) return sendErrorResponse()
+    if(!token) return sendErrorResponse(res)
     
     // Расшифрую JWT и получу payload
     const decoded = await promisify( jwt.verify )(token, config.jwt_secret)
@@ -38,11 +31,11 @@ exports.getTokenInfo = async (req, res, next) => {
     const currentUser = await User.findById(decoded.id)
     
     // Если пользователь не найден, то вернуть ошибочный ответ
-    if(!currentUser) return sendErrorResponse()
+    if(!currentUser) return sendErrorResponse(res)
     
-    // Если пароль изменён с последнего захода, то вернуть false
+    // Если пароль изменён с последнего захода, то вернуть ошибочный ответ
     if(currentUser.changedPasswordAfter(decoded.iat)) {
-        return sendErrorResponse()
+        return sendErrorResponse(res)
     }
     
     // Если все проверки прошли мимо, то вернуть положительный ответ вместе с данными пользователя
@@ -53,29 +46,14 @@ exports.getTokenInfo = async (req, res, next) => {
             email: currentUser.email
         }
     })
-}
-
-/**
- * Функция отправляющая письмо со ссылкой подтверждения почты
- * @param {Object} req — объект запроса от клиента
- * @param {String} email — почта пользователю, которую он должен подтвердить
- * @param {String} confirmToken — токен подтверждения почты
- * @returns {Promise<void>}
- */
-async function sendEmailAddressConfirmLetter(req, email, confirmToken) {
-    // В requestFromClient содержится булево значение сделан ли запрос из браузера.
-    // Если из браузера, то послать письмо на адрес на клиентской части
-    // Если не из браузера, то послать письмо на адрес API
-    const confirmUrl = req.headers.origin + `/api/v1/users/confirmEmail/${confirmToken}`
     
-    // Создать новое письмо.
-    // В конструктор передаётся почта пользователя и URL сайта вида http://todo.local
-    const userEmail = new Email(email, req.headers.origin)
-    
-    // Послать письмо для подтверждения почты
-    userEmail.sendConfirmLetter(confirmUrl).then(() => {})
+    // Функция возвращающая ошибочный ответ
+    function sendErrorResponse(res) {
+        res.status(200).json({
+            status: 'error'
+        })
+    }
 }
-exports.sendEmailAddressConfirmLetter = sendEmailAddressConfirmLetter
 
 
 // Функция защищающая маршрут от неавторизованных пользователей.
@@ -164,7 +142,6 @@ exports.confirmEmail = catchAsync(async (req, res, next) => {
         {emailConfirmToken: undefined},
         {new: true}
     )
-    // console.log(user)
     
     // Если пользователь не найден, то отправить страницу перебрасывающую пользователя на страницу где ему сообщат,
     // что пользователь уже подтвердил свою почту или такого пользователя не существует.
@@ -236,34 +213,6 @@ exports.logOut = (req, res, next) => {
     })
 }
 
-// Функция повторно отправляет письмо со ссылкой подтверждения почты.
-/*exports.sendAnotherEmailLetter = catchAsync(async (req, res, next) => {
-    // Найду пользователя по переданной почте
-    const user = await User.findOne({email: req.body.email})
-    
-    if(!user) {
-        return next(
-            new AppError('There are not user with provided email.', 400)
-        )
-    }
-    
-    // Если письмо уже подтверждено, то его подтверждать не нужно. Брошу ошибку.
-    if(!user.emailConfirmToken) {
-        return next(
-            new AppError('The email has already confirmed.', 400)
-        )
-    }
-    
-    // Отправлю письмо с подтверждением почты
-    await sendEmailAddressConfirmLetter(req, req.body.email, user.emailConfirmToken)
-    
-    // Отправить данные пользователя
-    res.status(200).json({
-        status: 'success',
-        data: null
-    })
-})*/
-
 
 // Функция создаёт токен сброса пароля, ставит в ссылку изменения пароля и отправляет на почту пользователя.
 exports.forgotPassword = catchAsync(async (req, res, next) => {
@@ -317,6 +266,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     }
 })
 
+
 // Функция меняет пароль взамен забытого
 exports.resetPassword = catchAsync(async (req, res, next) => {
     // Зашифрую пароль потому что в БД он хранится зашифрованным
@@ -331,6 +281,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
         passwordResetExpires: {$gt: Date.now()}
     })
     
+    // Бросить ошибку если пользователь не найден.
     if(!user) {
         next(
             new AppError('Token is invalid or has expired', 400)
@@ -354,6 +305,30 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     // Отправить данные пользователя
     sendResponseWithAuthToken(user, resWithToken)
 })
+
+
+/**
+ * Функция отправляющая письмо со ссылкой подтверждения почты
+ * @param {Object} req — объект запроса от клиента
+ * @param {String} email — почта пользователю, которую он должен подтвердить
+ * @param {String} confirmToken — токен подтверждения почты
+ * @returns {Promise<void>}
+ */
+async function sendEmailAddressConfirmLetter(req, email, confirmToken) {
+    // В requestFromClient содержится булево значение сделан ли запрос из браузера.
+    // Если из браузера, то послать письмо на адрес на клиентской части
+    // Если не из браузера, то послать письмо на адрес API
+    const confirmUrl = req.headers.origin + `/api/v1/users/confirmEmail/${confirmToken}`
+    
+    // Создать новое письмо.
+    // В конструктор передаётся почта пользователя и URL сайта вида http://todo.local
+    const userEmail = new Email(email, req.headers.origin)
+    
+    // Послать письмо для подтверждения почты
+    userEmail.sendConfirmLetter(confirmUrl).then(() => {})
+}
+exports.sendEmailAddressConfirmLetter = sendEmailAddressConfirmLetter
+
 
 function createRedirectPage(type) {
     return `<!DOCTYPE html>

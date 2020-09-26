@@ -49,6 +49,7 @@ exports.changeMyEmail = catchAsync(async (req, res, next) => {
     // Создам токен подтверждения почты
     const emailConfirmToken = crypto.randomBytes(32).toString('hex');
     
+    // Найду текущего пользователя и обновлю его почту
     const user = await User.findOneAndUpdate(
         {email: req.user.email},
         {
@@ -60,6 +61,12 @@ exports.changeMyEmail = catchAsync(async (req, res, next) => {
     
     // Отправлю письмо с подтверждением почты
     await sendEmailAddressConfirmLetter(req, req.body.email, emailConfirmToken)
+    
+    // Удалю куку авторизации
+    res.cookie('authToken', 'loggedout', {
+        expires: new Date(Date.now() + 2 * 1000),
+        httpOnly: true
+    })
     
     res.status(200).json({
         status: 'success',
@@ -115,7 +122,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 // Функция изменения пароля текущего пользователя, который помнит свой пароль
 exports.updateMyPassword = catchAsync(async (req, res, next) => {
     // Получу данные текущего пользователя вместе с паролем.
-    const user = await User.findById(req.user.id).select('+password');
+    const user = await User.findById(req.user.id).select('+password')
     
     // Если пользователь ввёл неверный текущий пароль, то бросить ошибку
     if(!await user.correctPassword(req.body.passwordCurrent, user.password)) {
@@ -125,15 +132,15 @@ exports.updateMyPassword = catchAsync(async (req, res, next) => {
     }
     
     // Поставить новый пароль в данные пользователя
-    user.password = req.body.password;
-    user.passwordConfirm = req.body.passwordConfirm;
+    user.password = req.body.password
+    user.passwordConfirm = req.body.passwordConfirm
     
     // Соханить пароль в базе данных
     await user.save()
     
     // Сотру пароли чтобы они не попали в возвращаемый результат
-    user.password = undefined;
-    user.passwordConfirm = undefined;
+    user.password = undefined
+    user.passwordConfirm = undefined
     
     // Создать объект ответа с токеном пользователя
     const resWithToken = createSendToken(user, res)
@@ -145,6 +152,7 @@ exports.updateMyPassword = catchAsync(async (req, res, next) => {
 
 // Функция удаляет пользователя
 exports.deleteMe = catchAsync(async (req, res, next) => {
+    
     // Удалить пользователя из БД
     await User.findByIdAndDelete(
         req.user.id

@@ -1,20 +1,18 @@
 import React from 'react'
-import './css/reset.css'
-import './css/general.scss'
-import s from './css/app.scss'
-
 import {
     BrowserRouter as Router,
     Switch,
     Route,
 } from "react-router-dom"
+import './css/reset.css'
+import './css/general.scss'
+import s from './css/app.scss'
 
-import MainPage from "../../pages/main"
-import UserAreaPages from "../../pages/userArea"
-import EntrancePages from "../../pages/entrance"
-// import ConfirmEmailPage from "../../pages/confirmEmail"
-import PageNotFound from "../../pages/pageNotFound"
+import MainPage from '../../pages/main'
+import EntrancePages from '../../pages/entrance'
+import UserAreaPages from '../../pages/userArea'
 import MessagePage from '../../pages/messagePage'
+import PageNotFound from '../../pages/pageNotFound'
 
 
 function App() {

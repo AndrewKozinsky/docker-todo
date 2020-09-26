@@ -15,8 +15,8 @@ router.route('/:timeStamp')
     .delete(authController.protect, noteController.deleteMyNote)
 
 // Получение статистики по количеству заметок
-/*router.route('/myNotesStatistics')
-    .get(authController.protect, noteController.getMyNotesStatistics)*/
+router.route('/myNotesStatistics')
+    .get(authController.protect, noteController.getMyNotesStatistics)
 
 
 module.exports = router

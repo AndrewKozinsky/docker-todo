@@ -2,13 +2,14 @@ import React from 'react'
 import {useDispatch, useSelector} from "react-redux"
 import {Switch, Route, Redirect} from 'react-router-dom'
 import {checkToken} from '../../utils/checkToken'
-import NotesPage from "../../pages/notes"
-import UserPage from "../../pages/user"
 import {setAuthTokenStatus} from "../../store/actions"
 import {setUserDataToStore} from "./js/resources"
+import NotesPage from "../../pages/notes"
+import UserPage from "../../pages/user"
 import Spinner from "../../components/various/spinner"
 import TopNav from "./components/topNav"
 import s from './css/UserAreaPages.module.scss'
+
 
 function UserAreaPages() {
     const dispatch = useDispatch()

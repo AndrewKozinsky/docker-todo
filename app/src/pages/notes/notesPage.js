@@ -1,9 +1,9 @@
 import React from 'react'
-import NotesSwitcher from "./components/notesSwitcher/notesSwitcher";
-import NotesSearch from "./components/notesSearch";
-import NewTaskForm from "./components/newTaskForm";
-import NotesList from "./components/notesList";
-import Pagination from "./components/pagination";
+import NotesSwitcher from "./components/notesSwitcher/notesSwitcher"
+import NotesSearch from "./components/notesSearch"
+import NewTaskForm from "./components/newTaskForm"
+import NotesList from "./components/notesList"
+// import Pagination from "./components/pagination"
 import s from './css/notesPage.scss'
 
 
@@ -24,7 +24,7 @@ function NotesPage() {
             <NotesList />
         </div>
         <div className={s.paginationWrapper}>
-            <Pagination />
+            {/*<Pagination />*/}
         </div>
     </div>
 }

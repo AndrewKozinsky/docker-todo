@@ -10,7 +10,6 @@ import Error from "../../../../../components/formElements/error"
 
 
 
-
 // Проверка полей формы
 export const validationSchema = Yup.object({
     email: Yup.string()
@@ -82,70 +81,69 @@ function SubmitBtn({formik}) {
  */
 export async function onSubmitHandler(values, setServerErr, setNotification, dispatch) {
     
-    // По какому адресу буду делать запрос на вход пользователя
-    const apiUrl = '/api/v1/users/myEmail'
+    try {
+        // По какому адресу буду делать запрос на вход пользователя
+        const apiUrl = '/api/v1/users/myEmail'
     
-    
-    // Параметры запроса
-    const options = {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values)
-    }
-    
-    // Сделаю запрос на сервер и полученные данные помещу в serverRes
-    const serverRes = await fetch(apiUrl, options)
-        .then(res => res.json())
-        .then(res => res)
-        .catch(err => console.log(err))
-    
-    
-    /*
-    Если в serverRes будет ошибка, то пользователю удалось отправить форму без почты
-    или он ввёл существующую почту: показать ошибку:
-    {
-        "status": "fail",
-        "error": {
-            "statusCode": 400,
-            "isOperational": true,
-            "message": "Cannot change email because it didn't pass."
+        // Параметры запроса
+        const options = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(values)
         }
-    }*/
-    if(serverRes.status === 'fail' && serverRes.error.statusCode === 400) {
-        setServerErr(
-            <Error text={serverRes.error.message} indent='3' />
-        )
-    }
     
-    /* Если всё верно, то в serverRes будет объект с успехом:
-    {
-        "status": "success",
-        "data": {
-            "user": {
-                "name": "Андрей Козинский",
-                "email": "andkozinskiy2@yandex.ru"
-            }
+        // Сделаю запрос на сервер и полученные данные помещу в serverRes
+        const serverRes = await fetch(apiUrl, options)
+            .then(res => res.json())
+            .then(res => res)
+            .catch(err => new Error('Something went wrong'))
+        
+        if(serverRes.status === 'success') {
+            /* Если всё верно, то в serverRes будет объект с успехом:
+            {
+                "status": "success",
+                "data": {
+                    "user": {
+                        "name": "Андрей Козинский",
+                        "email": "andkozinskiy2@yandex.ru"
+                    }
+                }
+            }*/
+            
+            // Ссформирую ссылку до почтового сервиса пользователя
+            const mailService = 'https://' + values.email.split('@')[1]
+            
+            // Уведомить пользователя о необходимости подтвердить почту
+            setNotification( <Notification topIndent='1'>The confirmation letter was sent to <a href={mailService}>your new email</a>. Click link on it to confirm your new email address.</Notification> )
+            setServerErr(null)
+            
+            setTimeout(function () {
+                // Поставить статус токена авторизации в 1 чтобы выкинуть пользователя.
+                dispatch(setAuthTokenStatus(1))
+            }, 4000)
         }
-    }*/
-    if(serverRes.status === 'success') {
-    
-        const mailService = 'https://' + values.email.split('@')[1]
-        
-        // Уведомить пользователя о необходимости подтвердить почту
-        setNotification(
-            <Notification topIndent='1'>The confirmation letter was sent to <a href={mailService}>your new email</a>. Click link on it to confirm your new email address.</Notification>
-        )
-        
-        window.addEventListener('unload', () => kickUser(dispatch))
-        
-        setTimeout(() => {
-            kickUser(dispatch)
-        }, 10000)
+        else if(serverRes.status === 'fail' && serverRes.error.statusCode === 400) {
+            /* Если в serverRes будет ошибка, то пользователю удалось отправить форму без почты
+            или он ввёл существующую почту: показать ошибку:
+            {
+                "status": "fail",
+                "error": {
+                    "statusCode": 400,
+                    "isOperational": true,
+                    "message": "Cannot change email because it didn't pass."
+                }
+            }*/
+            setServerErr(
+                <Error text={serverRes.error.message} indent='3' />
+            )
+        }
+        else {
+            setNotification( null )
+            setServerErr('Something went wrong')
+        }
     }
-}
-
-function kickUser(dispatch) {
-    
-    // Поставить статус токена авторизации в 1 чтобы выкинуть пользователя.
-    dispatch(setAuthTokenStatus(1))
+    catch (err) {
+        setNotification( null )
+        setServerErr('Something went wrong')
+    }
 }

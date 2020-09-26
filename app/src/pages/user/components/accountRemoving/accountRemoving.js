@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {useDispatch} from "react-redux"
-import Button from "../../../../components/formElements/button";
+import Button from "../../../../components/formElements/button"
 import {deleteAccount} from './js/resources'
 
 
@@ -21,4 +21,4 @@ const AccountRemoving = () => {
     </>
 }
 
-export default AccountRemoving;
+export default AccountRemoving

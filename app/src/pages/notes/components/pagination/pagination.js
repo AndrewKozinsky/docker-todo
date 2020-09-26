@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {setNotesCurrentPage} from "../../../../store/actions";
-import Button from "../../../../components/formElements/button";
+// import React, {useEffect} from 'react'
+// import {useDispatch, useSelector} from "react-redux"
+// import {setNotesCurrentPage} from "../../../../store/actions"
+// import Button from "../../../../components/formElements/button"
 
-function Pagination() {
+/*function Pagination() {
     
     const dispatch = useDispatch()
     
@@ -59,7 +59,7 @@ function Pagination() {
     }
     
     return pagesLinks.reverse()
-}
+}*/
 
 
-export default Pagination
+// export default Pagination

@@ -19,5 +19,3 @@ exports.email_from = 'mail@andrewkozinsky.ru'
 exports.sendpulse_api_user_id = 'a18cbff386759d5fbd86713d152dd2cd'
 exports.sendpulse_api_secret = '1d4f6afe38fd377a0ac46ff2233d96a3'
 exports.sendpulse_token_storage = '/tmp/'
-
-// FRONT_END_URL=http://localhost:8080

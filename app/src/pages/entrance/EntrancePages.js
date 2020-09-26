@@ -1,14 +1,14 @@
-import React from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React from 'react'
+import {useDispatch, useSelector} from "react-redux"
 import {Switch, Route, Redirect} from 'react-router-dom'
-import TopNavigation from "./components/topNavEntrance";
-import AuthSplitContainer from "./components/authSplitContainer";
-import {setAuthTokenStatus} from "../../store/actions";
-import RegForm from "./components/regForm";
-import EnterForm from "./components/enterForm";
-import {checkToken} from '../../utils/checkToken'
-import ForgotPasswordForm from "./components/forgotPasswordForm";
+import {setAuthTokenStatus} from "../../store/actions"
+import TopNavigation from "./components/topNavEntrance"
+import AuthSplitContainer from "./components/authSplitContainer"
+import RegForm from "./components/regForm"
+import EnterForm from "./components/enterForm"
+import ForgotPasswordForm from "./components/forgotPasswordForm"
 import ResetPasswordForm from "./components/resetPasswordForm"
+import {checkToken} from '../../utils/checkToken'
 import s from './css/EntrancePages.module.scss'
 
 
