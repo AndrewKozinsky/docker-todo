@@ -1,13 +1,13 @@
-// const catchAsync = require('../utils/catchAsync')
-// const AppError = require('../utils/appError')
-// const crypto = require('crypto')
-// const User = require('../mongooseModels/user')
-// const authToken = require('./authToken')
-// const {sendEmailAddressConfirmLetter} = require("./authController")
-/*const {
+const catchAsync = require('../utils/catchAsync')
+const AppError = require('../utils/appError')
+const crypto = require('crypto')
+const User = require('../mongooseModels/user')
+const authToken = require('./authToken')
+const {sendEmailAddressConfirmLetter} = require("./authController")
+const {
     createSendToken,
     sendResponseWithAuthToken
-} = require('./authToken')*/
+} = require('./authToken')
 
 
 /**
@@ -16,7 +16,7 @@
  * @param {Array} allowedFields — массив с именами разрешённых свойств
  * @returns {Object} — функция возвращает объект с разрешёнными свойствами
  */
-/*const filterObj = (obj, ...allowedFields) => {
+const filterObj = (obj, ...allowedFields) => {
     const newObj = {}
     
     Object.keys(obj).forEach(el => {
@@ -26,10 +26,10 @@
     })
     
     return newObj;
-}*/
+}
 
 // Обработчик маршрута изменения почты текущего пользователя
-/*exports.changeMyEmail = catchAsync(async (req, res, next) => {
+exports.changeMyEmail = catchAsync(async (req, res, next) => {
     // Получу новую почту
     const newEmail = req.body.email
     
@@ -75,11 +75,11 @@
             user
         }
     })
-})*/
+})
 
 
 // Функция отправляет данные пользователя по его токену
-/*exports.getMe = catchAsync(async (req, res, next) => {
+exports.getMe = catchAsync(async (req, res, next) => {
     return res.status(200).json({
         status: 'success',
         data: {
@@ -89,11 +89,11 @@
             }
         }
     })
-})*/
+})
 
 
 // Функция обновляет данные пользователя
-/*exports.updateMe = catchAsync(async (req, res, next) => {
+exports.updateMe = catchAsync(async (req, res, next) => {
     // Если передают пароль или почту, то ответить, что этот маршрут не для изменения пароля и почты
     if(req.body.password || req.body.passwordConfirm || req.body.email) {
         return next(
@@ -117,11 +117,11 @@
             user: updatedUser
         }
     })
-})*/
+})
 
 
 // Функция изменения пароля текущего пользователя, который помнит свой пароль
-/*exports.updateMyPassword = catchAsync(async (req, res, next) => {
+exports.updateMyPassword = catchAsync(async (req, res, next) => {
     // Получу данные текущего пользователя вместе с паролем.
     const user = await User.findById(req.user.id).select('+password')
     
@@ -148,11 +148,10 @@
     
     // Отправить данные пользователя
     sendResponseWithAuthToken(user, resWithToken)
-})*/
+})
 
 
 // Функция удаляет пользователя
-/*
 exports.deleteMe = catchAsync(async (req, res, next) => {
     
     // Удалить пользователя из БД
@@ -172,4 +171,4 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
             data: 1
         }
     })
-})*/
+})

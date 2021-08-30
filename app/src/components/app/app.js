@@ -29,12 +29,12 @@ function App() {
                     <Route path='/reset-password/:token'>
                         <EntrancePages />
                     </Route>
-                    {/*<Route path='/(notes|user)'>
+                    <Route path='/(notes|user)'>
                         <UserAreaPages />
-                    </Route>*/}
-                    {/*<Route path='/message' exact>
+                    </Route>
+                    <Route path='/message' exact>
                         <MessagePage />
-                    </Route>*/}
+                    </Route>
                     <Route path="*">
                         <PageNotFound />
                     </Route>

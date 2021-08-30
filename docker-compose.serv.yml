@@ -32,6 +32,8 @@ services:
       - MONGO_URL=mongodb://db:27017/db
     depends_on:
       - db
+    networks:
+      - todo-network
     volumes:
       - ./api/src:/app/src
 
@@ -40,6 +42,8 @@ services:
     container_name: todo-db
     volumes:
       - mongodb:/data/db
+    networks:
+      - todo-network
     ports:
       - "27017:27017"
 

@@ -1,9 +1,9 @@
-// const baseTemplate = require('./letters/functions/baseTemplate')
-// const confirmLetterContentTemplate = require('./letters/functions/confirmLetterContentTemplate')
-// const resetPasswordLetterContentTemplate = require('./letters/functions/resetPasswordLetterContentTemplate')
+const baseTemplate = require('./letters/functions/baseTemplate')
+const confirmLetterContentTemplate = require('./letters/functions/confirmLetterContentTemplate')
+const resetPasswordLetterContentTemplate = require('./letters/functions/resetPasswordLetterContentTemplate')
 
 
-/*class EmailTemplate {
+class EmailTemplate {
     constructor(host) {
         this.host = host
     }
@@ -31,6 +31,6 @@
     
         return [htmlTemplate, textContent]
     }
-}*/
+}
 
-// module.exports = EmailTemplate
+module.exports = EmailTemplate

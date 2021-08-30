@@ -1,10 +1,9 @@
-// const nodemailer = require('nodemailer')
-// const sendpulse = require('sendpulse-api')
-// const EmailTemplate = require('./emailTemplate')
-// const config = require('../../config')
+const nodemailer = require('nodemailer')
+const sendpulse = require('sendpulse-api')
+const EmailTemplate = require('./emailTemplate')
+const config = require('../../config')
 
 
-/*
 module.exports = class Email {
     constructor(email, host) {
         this.to = email // На какой адрес отправлять письмо
@@ -37,20 +36,10 @@ module.exports = class Email {
         
         // Послать письма разными сервисами в зависимости от режима работы
         if(config.work_mode === 'development') {
-            try {
-                this.sendFakeEmail(subject, htmlContent, textContent)
-            }
-            catch(e) {
-                console.log(e);
-            }
+            this.sendFakeEmail(subject, htmlContent, textContent)
         }
         else if(config.work_mode === 'production') {
-            try {
-                this.sendRealEmail(subject, htmlContent, textContent)
-            }
-            catch(e) {
-                console.log(e);
-            }
+            this.sendRealEmail(subject, htmlContent, textContent)
         }
     }
     
@@ -96,16 +85,16 @@ module.exports = class Email {
                 html,
                 text,
                 subject,
-                from: {
-                    name : 'To Do App',
-                    email : this.from
+                'from' : {
+                    'name' : 'To Do App',
+                    'email' : this.from
                 },
-                to : [
-                    { email : this.to }
+                'to' : [
+                    { "email" : this.to }
                 ]
             };
         
             sendpulse.smtpSendMail(answerGetter, email);
         })
     }
-}*/
+}
