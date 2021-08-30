@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
-const userController = require('../controllers/userController');
+// const userController = require('../controllers/userController');
 
 // Получение данных токена
-// router.post('/getTokenInfo', authController.getTokenInfo)
+router.post('/getTokenInfo', authController.getTokenInfo)
 
 // Регистрация пользователя
 // router.post('/signup', authController.signUp)

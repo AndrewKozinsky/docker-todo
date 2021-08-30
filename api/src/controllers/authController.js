@@ -1,7 +1,7 @@
 // const jwt = require('jsonwebtoken')
 // const {promisify} = require('util')
 // const crypto = require('crypto')
-// const User = require('../mongooseModels/user')
+const User = require('../mongooseModels/user')
 // const catchAsync = require('../utils/catchAsync')
 // const AppError = require('../utils/appError')
 // const Email = require('../utils/email/email')
@@ -13,7 +13,7 @@
 
 
 // Функция отдающая данные по переданному токене. Токен передаётся в куках.
-/*exports.getTokenInfo = async (req, res, next) => {
+exports.getTokenInfo = async (req, res, next) => {
     let token
     
     // Получу токен из кук
@@ -53,7 +53,7 @@
             status: 'error'
         })
     }
-}*/
+}
 
 
 // Функция защищающая маршрут от неавторизованных пользователей.

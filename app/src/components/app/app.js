@@ -23,12 +23,12 @@ function App() {
                     <Route path='/' exact>
                         <MainPage />
                     </Route>
-                    {/*<Route path='/(reg|enter|forgot-password)'>
+                    <Route path='/(reg|enter|forgot-password)'>
                         <EntrancePages />
-                    </Route>*/}
-                    {/*<Route path='/reset-password/:token'>
+                    </Route>
+                    <Route path='/reset-password/:token'>
                         <EntrancePages />
-                    </Route>*/}
+                    </Route>
                     {/*<Route path='/(notes|user)'>
                         <UserAreaPages />
                     </Route>*/}
