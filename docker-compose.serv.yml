@@ -32,6 +32,8 @@ services:
       - MONGO_URL=mongodb://db:27017/db
     depends_on:
       - db
+    volumes:
+      - ./api/src:/app/src
 
   db:
     image: mongo:latest
