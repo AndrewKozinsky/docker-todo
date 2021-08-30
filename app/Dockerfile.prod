@@ -3,5 +3,5 @@ WORKDIR /app
 COPY . .
 COPY ./serve.json /app/dist
 RUN npm install
+RUN npm install -g serve
 RUN npm run build
-CMD ["npm", "install", "-g", "serve"]

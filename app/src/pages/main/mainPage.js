@@ -6,25 +6,26 @@ import {setAuthTokenStatus} from "../../store/actions"
 
 
 function MainPage() {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     
     // Получу статус токена
-    const {authTokenStatus} = useSelector(store => store.user)
+    // const {authTokenStatus} = useSelector(store => store.user)
     
     // Если authTokenStatus равен нулю, то не понятно есть ли в браузере токен и верен ли он. Поэтому проверю.
-    if(authTokenStatus === 0) {
+    /*if(authTokenStatus === 0) {
         checkToken().then((status) => {
             dispatch( setAuthTokenStatus(status) )
         })
         
         return null
-    }
+    }*/
     
     // Если токена нет или он неверный, то пользователь еще не вошёл, перенаправить на страницу входа
-    if(authTokenStatus === 1) return <Redirect to='/enter' />
+    // if(authTokenStatus === 1) return <Redirect to='/enter' />
     
     // Есть правильный токен. Перенаправить на страницу заметок.
-    return <Redirect to='/notes' />
+    // return <Redirect to='/notes' />
+    return <p>Hello</p>
 }
 
 export default MainPage

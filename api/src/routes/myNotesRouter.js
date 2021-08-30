@@ -19,4 +19,4 @@
 //     .get(authController.protect, noteController.getMyNotesStatistics)
 
 
-module.exports = router
+// module.exports = router

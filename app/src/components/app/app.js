@@ -23,18 +23,18 @@ function App() {
                     <Route path='/' exact>
                         <MainPage />
                     </Route>
-                    <Route path='/(reg|enter|forgot-password)'>
+                    {/*<Route path='/(reg|enter|forgot-password)'>
                         <EntrancePages />
-                    </Route>
-                    <Route path='/reset-password/:token'>
+                    </Route>*/}
+                    {/*<Route path='/reset-password/:token'>
                         <EntrancePages />
-                    </Route>
-                    <Route path='/(notes|user)'>
+                    </Route>*/}
+                    {/*<Route path='/(notes|user)'>
                         <UserAreaPages />
-                    </Route>
-                    <Route path='/message' exact>
+                    </Route>*/}
+                    {/*<Route path='/message' exact>
                         <MessagePage />
-                    </Route>
+                    </Route>*/}
                     <Route path="*">
                         <PageNotFound />
                     </Route>
