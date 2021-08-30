@@ -8,12 +8,10 @@ process.on('uncaughtException', err => {
     process.exit(1)
 })
 
-// connectDb()
-//     .on('error', console.log)
-//     .on('disconnected', connectDb)
-//     .once('open', startServer)
-
-startServer()
+connectDb()
+    .on('error', console.log)
+    .on('disconnected', connectDb)
+    .once('open', startServer)
 
 
 function startServer() {
