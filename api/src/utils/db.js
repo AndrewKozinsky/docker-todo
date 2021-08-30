@@ -1,13 +1,13 @@
-const mongoose = require('mongoose')
-const {db} = require('../config')
+// const mongoose = require('mongoose')
+// const {db} = require('../config')
 
-exports.connectDb = function() {
+/*exports.connectDb = function() {
     mongoose.connect(db, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
     return mongoose.connection
-}
+}*/
 
 
 // Настройка Монгуса чтобы не ругался

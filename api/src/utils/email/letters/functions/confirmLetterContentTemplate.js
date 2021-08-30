@@ -1,4 +1,4 @@
-function confirmLetterContentTemplate(confirmUrl) {
+/*function confirmLetterContentTemplate(confirmUrl) {
     return `
         <p class="paragraph">
             Your email address was provided when you registered in the <i>To Do List</i> service. Please confirm your mail address by clicking on this button:
@@ -12,6 +12,6 @@ function confirmLetterContentTemplate(confirmUrl) {
             If you did not register for this service, please ignore this letter.
         </p>
         `
-}
+}*/
 
-module.exports = confirmLetterContentTemplate
+// module.exports = confirmLetterContentTemplate

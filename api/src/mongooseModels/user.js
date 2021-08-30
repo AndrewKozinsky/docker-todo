@@ -1,10 +1,10 @@
-const mongoose = require('mongoose')
-const validator = require('validator')
-const bcrypt = require('bcryptjs')
-const crypto = require('crypto')
+// const mongoose = require('mongoose')
+// const validator = require('validator')
+// const bcrypt = require('bcryptjs')
+// const crypto = require('crypto')
 
 // Схема пользователя
-const userSchema = new mongoose.Schema({
+/*const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Please provide your name']
@@ -36,11 +36,11 @@ const userSchema = new mongoose.Schema({
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date
-})
+})*/
 
 
 // Перед сохранением пользователя зашифровать пароль
-userSchema.pre('save', async function(next) {
+/*userSchema.pre('save', async function(next) {
     // Завершить функцию если не обновляют пароль
     if(!this.isModified('password')) return next()
     
@@ -49,26 +49,26 @@ userSchema.pre('save', async function(next) {
     
     // Удалить поле с подтверждением пароля
     this.passwordConfirm = undefined
-})
+})*/
 
 // При изменении пароля записать дату изменения
-userSchema.pre('save', function (next) {
+/*userSchema.pre('save', function (next) {
     if(!this.isModified('password') || this.isNew)
         return next();
     
     this.passwordChangedAt = +Date.now() - 1000
     next()
-})
+})*/
 
 
 // Функция проверяющая идентичность паролей
-userSchema.methods.correctPassword = async (candidatePassword, userPassword) => {
+/*userSchema.methods.correctPassword = async (candidatePassword, userPassword) => {
     return await bcrypt.compare(candidatePassword, userPassword)
-}
+}*/
 
 // Функция проверяет изменился ли пароль пользователя позже, чем переданное время.
 // true обозначает, что изменился позже переданного времени
-userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
+/*userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
     
     if(this.passwordChangedAt) {
         const changedTimestamp = parseInt(
@@ -80,10 +80,10 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
     }
     
     return false
-}
+}*/
 
 // Метод создающий токен сброса пароля
-userSchema.methods.createPasswordResetToken = function () {
+/*userSchema.methods.createPasswordResetToken = function () {
     const resetToken = crypto.randomBytes(32).toString('hex')
     
     this.passwordResetToken = crypto
@@ -94,9 +94,9 @@ userSchema.methods.createPasswordResetToken = function () {
     this.passwordResetExpires = Date.now() + 10 * 60 * 1000
     
     return resetToken;
-}
+}*/
 
 
-const User = mongoose.model('User', userSchema)
+// const User = mongoose.model('User', userSchema)
 
-module.exports = User
+// module.exports = User

@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken')
-const config = require('../config')
+// const jwt = require('jsonwebtoken')
+// const config = require('../config')
 
 /**
  * Функция возвращает ответ с токеном авторизации
@@ -7,7 +7,7 @@ const config = require('../config')
  * @param {Number} statusCode — код ответа сервера
  * @param {Object} user —
  */
-function sendResponseWithAuthToken(user, res, statusCode = 200) {
+/*function sendResponseWithAuthToken(user, res, statusCode = 200) {
     res.status(statusCode).json({
         status: 'success',
         data: {
@@ -17,15 +17,15 @@ function sendResponseWithAuthToken(user, res, statusCode = 200) {
             }
         }
     })
-}
-exports.sendResponseWithAuthToken = sendResponseWithAuthToken
+}*/
+// exports.sendResponseWithAuthToken = sendResponseWithAuthToken
 
 /**
  * Функция создающая токен авторизации и ставящая его в куку в объекте ответа сервера.
  * @param user
  * @param {Object} res — объект ответа сервера
  */
-function createSendToken(user, res) {
+/*function createSendToken(user, res) {
     const token = signToken(user._id)
     
     const cookieOptions = {
@@ -36,18 +36,19 @@ function createSendToken(user, res) {
     res.cookie('authToken', token, cookieOptions)
     
     return res
-}
-module.exports.createSendToken = createSendToken
+}*/
+// module.exports.createSendToken = createSendToken
 
 /**
  * Функция создающая токен пользователя по переданному ID
  * @param {String} id — id пользователя
  * @returns {undefined|*}
  */
+/*
 function signToken(id) {
     return jwt.sign(
         { id },
         config.jwt_secret,
         { expiresIn: config.jwt_expires_in }
     )
-}
+}*/

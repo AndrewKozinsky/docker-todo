@@ -1,19 +1,19 @@
-const jwt = require('jsonwebtoken')
-const {promisify} = require('util')
-const crypto = require('crypto')
-const User = require('../mongooseModels/user')
-const catchAsync = require('../utils/catchAsync')
-const AppError = require('../utils/appError')
-const Email = require('../utils/email/email')
-const {
-    createSendToken,
-    sendResponseWithAuthToken
-} = require('./authToken')
-const config = require('../config')
+// const jwt = require('jsonwebtoken')
+// const {promisify} = require('util')
+// const crypto = require('crypto')
+// const User = require('../mongooseModels/user')
+// const catchAsync = require('../utils/catchAsync')
+// const AppError = require('../utils/appError')
+// const Email = require('../utils/email/email')
+// const {
+//     createSendToken,
+//     sendResponseWithAuthToken
+// } = require('./authToken')
+// const config = require('../config')
 
 
 // Функция отдающая данные по переданному токене. Токен передаётся в куках.
-exports.getTokenInfo = async (req, res, next) => {
+/*exports.getTokenInfo = async (req, res, next) => {
     let token
     
     // Получу токен из кук
@@ -53,13 +53,13 @@ exports.getTokenInfo = async (req, res, next) => {
             status: 'error'
         })
     }
-}
+}*/
 
 
 // Функция защищающая маршрут от неавторизованных пользователей.
 // Если пользователь отправил токен, то программа запускает следующий middleware.
 // Если не отправил, то выбрасывает ошибку.
-exports.protect = catchAsync(async (req, res, next) => {
+/*exports.protect = catchAsync(async (req, res, next) => {
     let token;
     
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
@@ -99,11 +99,11 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.user = currentUser
     
     next()
-})
+})*/
 
 
 // Обработчик регистрации пользователя
-exports.signUp = catchAsync(async (req, res, next) => {
+/*exports.signUp = catchAsync(async (req, res, next) => {
     
     // Токен подтверждения почты
     const emailConfirmToken = crypto.randomBytes(32).toString('hex')
@@ -130,11 +130,11 @@ exports.signUp = catchAsync(async (req, res, next) => {
     
     // Отправить данные пользователя
     sendResponseWithAuthToken(newUser, resWithToken)
-})
+})*/
 
 
 // Обработчик подтверждения почты пользователя
-exports.confirmEmail = catchAsync(async (req, res, next) => {
+/*exports.confirmEmail = catchAsync(async (req, res, next) => {
     
     // Найду пользователя с таким же токеном подтверждения почты
     const user = await User.findOneAndUpdate(
@@ -160,11 +160,11 @@ exports.confirmEmail = catchAsync(async (req, res, next) => {
     // Отправить страницу перебрасывающую пользователя на страницу где ему сообщат,
     // что пользователь успешно подтвердил свою почту.
     resWithToken.status(200).send(createRedirectPage('emailIsConfirmed'))
-})
+})*/
 
 
 // Вход пользователя
-exports.logIn = catchAsync(async (req, res, next) => {
+/*exports.logIn = catchAsync(async (req, res, next) => {
     
     // Получу почту и пароль из тела запроса
     let {email, password} = req.body;
@@ -199,10 +199,10 @@ exports.logIn = catchAsync(async (req, res, next) => {
     
     // Отправить данные пользователя
     sendResponseWithAuthToken(user, resWithToken)
-})
+})*/
 
 // Выход пользователя
-exports.logOut = (req, res, next) => {
+/*exports.logOut = (req, res, next) => {
     res.cookie('authToken', 'loggedout', {
         expires: new Date(Date.now() + 2 * 1000),
         httpOnly: true
@@ -211,11 +211,11 @@ exports.logOut = (req, res, next) => {
     res.status(200).json({
         status: 'success'
     })
-}
+}*/
 
 
 // Функция создаёт токен сброса пароля, ставит в ссылку изменения пароля и отправляет на почту пользователя.
-exports.forgotPassword = catchAsync(async (req, res, next) => {
+/*exports.forgotPassword = catchAsync(async (req, res, next) => {
     
     // Получу данные пользователя по переданной почте
     const user = await User.findOne({email: req.body.email})
@@ -264,11 +264,11 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
             new AppError('There was an error sending the email. Try again later', 500)
         )
     }
-})
+})*/
 
 
 // Функция меняет пароль взамен забытого
-exports.resetPassword = catchAsync(async (req, res, next) => {
+/*exports.resetPassword = catchAsync(async (req, res, next) => {
     // Зашифрую пароль потому что в БД он хранится зашифрованным
     const hashedToken = crypto
         .createHash('sha256')
@@ -304,7 +304,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     
     // Отправить данные пользователя
     sendResponseWithAuthToken(user, resWithToken)
-})
+})*/
 
 
 /**
@@ -314,7 +314,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
  * @param {String} confirmToken — токен подтверждения почты
  * @returns {Promise<void>}
  */
-async function sendEmailAddressConfirmLetter(req, email, confirmToken) {
+/*async function sendEmailAddressConfirmLetter(req, email, confirmToken) {
     // В requestFromClient содержится булево значение сделан ли запрос из браузера.
     // Если из браузера, то послать письмо на адрес на клиентской части
     // Если не из браузера, то послать письмо на адрес API
@@ -326,11 +326,11 @@ async function sendEmailAddressConfirmLetter(req, email, confirmToken) {
     
     // Послать письмо для подтверждения почты
     userEmail.sendConfirmLetter(confirmUrl).then(() => {})
-}
-exports.sendEmailAddressConfirmLetter = sendEmailAddressConfirmLetter
+}*/
+// exports.sendEmailAddressConfirmLetter = sendEmailAddressConfirmLetter
 
 
-function createRedirectPage(type) {
+/*function createRedirectPage(type) {
     return `<!DOCTYPE html>
         <html lang="en">
         <head>
@@ -343,4 +343,4 @@ function createRedirectPage(type) {
             </script>
         </body>
         </html>`
-}
+}*/

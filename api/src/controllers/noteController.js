@@ -1,10 +1,10 @@
-const catchAsync = require('../utils/catchAsync')
-const AppError = require('../utils/appError')
-const Note = require('../mongooseModels/note')
+// const catchAsync = require('../utils/catchAsync')
+// const AppError = require('../utils/appError')
+// const Note = require('../mongooseModels/note')
 
 // Функция корректирующая объект запроса Монгуса в зависимости
 // от переданных подзапросов в адресной строке.
-const handleGetNotesQuery = (query, queryObj) => {
+/*const handleGetNotesQuery = (query, queryObj) => {
     if(!queryObj) return query;
     
     if(queryObj.search) {
@@ -30,10 +30,10 @@ const handleGetNotesQuery = (query, queryObj) => {
     }
     
     return query
-}
+}*/
 
 // Получение всех заметок текущего пользователя
-exports.getMyNotes = catchAsync(async (req, res, next) => {
+/*exports.getMyNotes = catchAsync(async (req, res, next) => {
     
     // Сформирую объект запроса
     let query = Note
@@ -57,11 +57,11 @@ exports.getMyNotes = catchAsync(async (req, res, next) => {
             notes
         }
     })
-})
+})*/
 
 
 // Создание заметки текущего пользователя
-exports.createMyNote = catchAsync(async (req, res, next) => {
+/*exports.createMyNote = catchAsync(async (req, res, next) => {
     
     // Получу из тела запроса данные новой заметки
     const {
@@ -96,11 +96,11 @@ exports.createMyNote = catchAsync(async (req, res, next) => {
             }
         }
     })
-})
+})*/
 
 
 // Обновление конкретной заметки пользователя
-exports.updateMyNote = catchAsync(async (req, res, next) => {
+/*exports.updateMyNote = catchAsync(async (req, res, next) => {
     
     // Уберу поля, которые нельзя изменять
     const newUpdateObj = {...req.body}
@@ -119,11 +119,11 @@ exports.updateMyNote = catchAsync(async (req, res, next) => {
             note: newNote
         }
     })
-})
+})*/
 
 
 // Удаление конкретной заметки пользователя
-exports.deleteMyNote = catchAsync(async (req, res, next) => {
+/*exports.deleteMyNote = catchAsync(async (req, res, next) => {
     
     await Note.findOneAndDelete({timeStamp: req.params.timeStamp})
     
@@ -131,10 +131,11 @@ exports.deleteMyNote = catchAsync(async (req, res, next) => {
         status: 'success',
         data: null
     })
-})
+})*/
 
 
 // Получение статистики по количеству заметок
+/*
 exports.getMyNotesStatistics = catchAsync(async (req, res, next) => {
     
     const totalCount = await Note.aggregate([
@@ -169,4 +170,4 @@ exports.getMyNotesStatistics = catchAsync(async (req, res, next) => {
             stats
         }
     })
-})
+})*/

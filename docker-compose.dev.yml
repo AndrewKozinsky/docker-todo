@@ -26,7 +26,7 @@ services:
     networks:
       - todo-network
     volumes:
-      - ./app/src:/usr/src/app/src
+      - ./app/src:/app/src
 
   api:
     build: ./api
@@ -42,7 +42,7 @@ services:
     networks:
       - todo-network
     volumes:
-      - ./api/src:/usr/src/app/src
+      - ./api/src:/app/src
 
   db:
     image: mongo:latest

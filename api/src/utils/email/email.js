@@ -1,9 +1,10 @@
-const nodemailer = require('nodemailer')
-const sendpulse = require('sendpulse-api')
-const EmailTemplate = require('./emailTemplate')
-const config = require('../../config')
+// const nodemailer = require('nodemailer')
+// const sendpulse = require('sendpulse-api')
+// const EmailTemplate = require('./emailTemplate')
+// const config = require('../../config')
 
 
+/*
 module.exports = class Email {
     constructor(email, host) {
         this.to = email // На какой адрес отправлять письмо
@@ -107,4 +108,4 @@ module.exports = class Email {
             sendpulse.smtpSendMail(answerGetter, email);
         })
     }
-}
+}*/

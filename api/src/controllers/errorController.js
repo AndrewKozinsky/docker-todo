@@ -1,7 +1,7 @@
-const config = require('../config')
+// const config = require('../config')
 
 // Глобальный обработчик ошибок Экспресса
-module.exports = function globalErrorHandler (err, req, res, next) {
+/*module.exports = function globalErrorHandler (err, req, res, next) {
     
     
     console.log('=======================')
@@ -25,10 +25,10 @@ module.exports = function globalErrorHandler (err, req, res, next) {
     else if(config.work_mode === 'production') {
         sendErrorProd(error, res)
     }
-}
+}*/
 
 // Функция отправляет ошибочный ответ в режиме разработки
-function sendErrorDev(err, res) {
+/*function sendErrorDev(err, res) {
     res
         .status(err.statusCode)
         .json({
@@ -39,10 +39,10 @@ function sendErrorDev(err, res) {
                 message: err.message
             }
         })
-}
+}*/
 
 // Функция отправляет ошибочный ответ в режиме публикации
-function sendErrorProd(err, res) {
+/*function sendErrorProd(err, res) {
     
     if(err.isOperational) {
         res
@@ -65,39 +65,39 @@ function sendErrorProd(err, res) {
                 }
             })
     }
-}
+}*/
 
 
 // В поле, которое должно быть уникальным, передали повторяющееся значение
-function handleDuplicateFieldsBD(err) {
+/*function handleDuplicateFieldsBD(err) {
     const value = Object.values(err.keyValue)[0]
     const message = `Duplicate field value: ${value}. Please use another one!`
     
     err.statusCode = 400
     err.message = message
     return err
-}
+}*/
 
 // Ошибка при проверке поля
-function handleValidationErrorBD(err) {
+/*function handleValidationErrorBD(err) {
     const errors = Object.values(err.errors).map(el => el.message)
     const message = `Invalid input data: ${errors.join('. ')}`
     
     err.statusCode = 400
     err.message = message
     return err
-}
+}*/
 
 // Ошибка в JWT
-function handleJWTError(err) {
+/*function handleJWTError(err) {
     err.statusCode = 401
     err.message = 'Invalid token. Please log in again.'
     return err
-}
+}*/
 
 // В JWT истёк срок действия
-function handleJWTExpiredError(err) {
+/*function handleJWTExpiredError(err) {
     err.statusCode = 401
     err.message = 'Your token has expired. Please log in again.'
     return err
-}
+}*/

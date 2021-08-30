@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
 // Схама заметки
-const noteSchema = mongoose.Schema({
+/*const noteSchema = mongoose.Schema({
     text: {
         type: String,
         required: [true, 'Please provide note\'s text' ]
@@ -18,9 +18,9 @@ const noteSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please provide user\'s id' ]
     }
-})
+})*/
 
 
-const Note = mongoose.model('Note', noteSchema)
+// const Note = mongoose.model('Note', noteSchema)
 
-module.exports = Note
+// module.exports = Note
