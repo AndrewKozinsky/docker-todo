@@ -2,7 +2,7 @@ const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const rateLimit = require('express-rate-limit')
-// const userRouter = require('./routes/userRouter')
+const userRouter = require('./routes/userRouter')
 // const myNotesRouter = require('./routes/myNotesRouter')
 const AppError = require('./utils/appError')
 const globalErrorHandler = require('./controllers/errorController')
@@ -26,7 +26,7 @@ app.use('/', rater)
 
 
 // Маршруты API
-// app.use('/users', userRouter);
+app.use('/users', userRouter);
 // app.use('/myNotes', myNotesRouter)
 app.get('/test', (req, res) => {
     res.send('Hello!')
@@ -34,7 +34,7 @@ app.get('/test', (req, res) => {
 
 
 // Статические файлы на сервере.
-// app.use(express.static(path.join(__dirname, 'static-files')))
+app.use(express.static(path.join(__dirname, 'static-files')))
 
 
 // Обработка несуществующего маршрута
@@ -45,7 +45,7 @@ app.all("*", (req, res, next) => {
 })
 
 // Глобальный обработчик ошибок
-// app.use(globalErrorHandler)
+app.use(globalErrorHandler)
 
 
 module.exports = app

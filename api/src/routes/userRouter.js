@@ -1,7 +1,7 @@
-// const express = require('express');
-// const router = express.Router();
-// const authController = require('../controllers/authController');
-// const userController = require('../controllers/userController');
+const express = require('express');
+const router = express.Router();
+const authController = require('../controllers/authController');
+const userController = require('../controllers/userController');
 
 // Получение данных токена
 // router.post('/getTokenInfo', authController.getTokenInfo)
@@ -41,4 +41,4 @@
 //     .patch(authController.protect, userController.updateMyPassword)
 
 
-// module.exports = router
+module.exports = router
