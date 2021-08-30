@@ -1,7 +1,7 @@
 server {
   listen 80;
 
-  server_name todo.andrewkozinsky.ru;
+  server_name todo.local;
 
   location /test {
       return 200 "Everything is OK";
