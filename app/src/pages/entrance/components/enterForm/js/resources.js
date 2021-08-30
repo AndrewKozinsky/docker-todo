@@ -133,7 +133,7 @@ export async function onSubmitHandler(values, setServerErr, setNotification, dis
     catch (err) {
         setNotification(null)
         setServerErr(
-            <Error text='Something went wrong _' indent='3' />
+            <Error text='Something went wrong' indent='3' />
         )
     }
 }

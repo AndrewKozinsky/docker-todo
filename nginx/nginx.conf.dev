@@ -3,6 +3,10 @@ server {
 
     server_name todo.local;
 
+    location /test {
+        return 200 "Everything is OK";
+    }
+
     location / {
         proxy_pass http://app:3000;
         # Needed for sockets

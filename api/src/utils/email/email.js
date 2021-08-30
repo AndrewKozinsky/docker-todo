@@ -36,10 +36,20 @@ module.exports = class Email {
         
         // Послать письма разными сервисами в зависимости от режима работы
         if(config.work_mode === 'development') {
-            this.sendFakeEmail(subject, htmlContent, textContent)
+            try {
+                this.sendFakeEmail(subject, htmlContent, textContent)
+            }
+            catch(e) {
+                console.log(e);
+            }
         }
         else if(config.work_mode === 'production') {
-            this.sendRealEmail(subject, htmlContent, textContent)
+            try {
+                this.sendRealEmail(subject, htmlContent, textContent)
+            }
+            catch(e) {
+                console.log(e);
+            }
         }
     }
     
@@ -85,12 +95,12 @@ module.exports = class Email {
                 html,
                 text,
                 subject,
-                'from' : {
-                    'name' : 'To Do App',
-                    'email' : this.from
+                from: {
+                    name : 'To Do App',
+                    email : this.from
                 },
-                'to' : [
-                    { "email" : this.to }
+                to : [
+                    { email : this.to }
                 ]
             };
         
